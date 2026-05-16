@@ -1,0 +1,141 @@
+{
+  "base_url": "https://integrate.api.nvidia.com/v1",
+  "created_at": "2026-05-15T09:50:26.563516+00:00",
+  "ok": true,
+  "provider": "nvidia",
+  "repeat": 1,
+  "results": [
+    {
+      "error": "TimeoutError: The read operation timed out",
+      "model": "z-ai/glm-5.1",
+      "prompt": "smoke",
+      "status": "timeout_or_error",
+      "timeout_seconds": 60,
+      "total_seconds": 60.268
+    },
+    {
+      "error": "TimeoutError: The read operation timed out",
+      "model": "deepseek-ai/deepseek-v4-pro",
+      "prompt": "smoke",
+      "status": "timeout_or_error",
+      "timeout_seconds": 60,
+      "total_seconds": 60.181
+    },
+    {
+      "error": "TimeoutError: The read operation timed out",
+      "model": "deepseek-ai/deepseek-v4-flash",
+      "prompt": "smoke",
+      "status": "timeout_or_error",
+      "timeout_seconds": 60,
+      "total_seconds": 60.238
+    },
+    {
+      "content_preview": "OK",
+      "finish_reason": "stop",
+      "model": "mistralai/mistral-large-3-675b-instruct-2512",
+      "prompt": "smoke",
+      "status": "returned",
+      "timeout_seconds": 60,
+      "total_seconds": 1.028
+    },
+    {
+      "error": "TimeoutError: The read operation timed out",
+      "model": "minimaxai/minimax-m2.7",
+      "prompt": "smoke",
+      "status": "timeout_or_error",
+      "timeout_seconds": 60,
+      "total_seconds": 60.24
+    },
+    {
+      "error": "TimeoutError: The read operation timed out",
+      "model": "moonshotai/kimi-k2.6",
+      "prompt": "smoke",
+      "status": "timeout_or_error",
+      "timeout_seconds": 60,
+      "total_seconds": 60.244
+    },
+    {
+      "content_preview": "OK",
+      "finish_reason": "stop",
+      "model": "meta/llama-4-maverick-17b-128e-instruct",
+      "prompt": "smoke",
+      "status": "returned",
+      "timeout_seconds": 60,
+      "total_seconds": 1.597
+    }
+  ],
+  "schema_version": "model-benchmark-v1",
+  "suite": "smoke",
+  "summaries": [
+    {
+      "attempt_count": 1,
+      "avg_total_seconds": null,
+      "chat_ready": false,
+      "max_total_seconds": null,
+      "model": "z-ai/glm-5.1",
+      "recommended_timeout_seconds": 60,
+      "success_count": 0,
+      "success_rate": 0.0
+    },
+    {
+      "attempt_count": 1,
+      "avg_total_seconds": null,
+      "chat_ready": false,
+      "max_total_seconds": null,
+      "model": "deepseek-ai/deepseek-v4-pro",
+      "recommended_timeout_seconds": 60,
+      "success_count": 0,
+      "success_rate": 0.0
+    },
+    {
+      "attempt_count": 1,
+      "avg_total_seconds": null,
+      "chat_ready": false,
+      "max_total_seconds": null,
+      "model": "deepseek-ai/deepseek-v4-flash",
+      "recommended_timeout_seconds": 60,
+      "success_count": 0,
+      "success_rate": 0.0
+    },
+    {
+      "attempt_count": 1,
+      "avg_total_seconds": 1.028,
+      "chat_ready": true,
+      "max_total_seconds": 1.028,
+      "model": "mistralai/mistral-large-3-675b-instruct-2512",
+      "recommended_timeout_seconds": 60,
+      "success_count": 1,
+      "success_rate": 1.0
+    },
+    {
+      "attempt_count": 1,
+      "avg_total_seconds": null,
+      "chat_ready": false,
+      "max_total_seconds": null,
+      "model": "minimaxai/minimax-m2.7",
+      "recommended_timeout_seconds": 60,
+      "success_count": 0,
+      "success_rate": 0.0
+    },
+    {
+      "attempt_count": 1,
+      "avg_total_seconds": null,
+      "chat_ready": false,
+      "max_total_seconds": null,
+      "model": "moonshotai/kimi-k2.6",
+      "recommended_timeout_seconds": 60,
+      "success_count": 0,
+      "success_rate": 0.0
+    },
+    {
+      "attempt_count": 1,
+      "avg_total_seconds": 1.597,
+      "chat_ready": true,
+      "max_total_seconds": 1.597,
+      "model": "meta/llama-4-maverick-17b-128e-instruct",
+      "recommended_timeout_seconds": 60,
+      "success_count": 1,
+      "success_rate": 1.0
+    }
+  ]
+}

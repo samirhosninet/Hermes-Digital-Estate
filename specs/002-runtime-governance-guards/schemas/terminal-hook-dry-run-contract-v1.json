@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Terminal Hook Dry-Run Contract v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "mode",
+    "runtime_enforcement_enabled",
+    "changes_terminal_execution_flow",
+    "may_block_commands",
+    "requires_existing_approval_flow",
+    "required_evidence_before_integration",
+    "rollback"
+  ],
+  "properties": {
+    "schema_version": {"const": "terminal-hook-dry-run-contract-v1"},
+    "mode": {"const": "dry_run_log_only"},
+    "runtime_enforcement_enabled": {"const": false},
+    "changes_terminal_execution_flow": {"const": false},
+    "may_block_commands": {"const": false},
+    "requires_existing_approval_flow": {"const": true},
+    "hook_boundary": {"const": "terminal"},
+    "required_evidence_before_integration": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "candidate_runtime_file": {"type": "string"},
+    "rollback": {"const": "remove_hook_call_or_disable_config_flag"}
+  },
+  "additionalProperties": true
+}

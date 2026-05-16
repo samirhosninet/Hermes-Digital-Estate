@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hermes-agent.local/schemas/model-benchmark-v1.json",
+  "title": "Hermes Model Benchmark Result",
+  "type": "object",
+  "required": ["ok", "schema_version", "created_at", "provider", "suite", "results", "summaries"],
+  "properties": {
+    "ok": {"type": "boolean"},
+    "schema_version": {"const": "model-benchmark-v1"},
+    "created_at": {"type": "string"},
+    "provider": {"type": "string"},
+    "base_url": {"type": "string"},
+    "suite": {"enum": ["smoke", "chat", "analysis", "all"]},
+    "repeat": {"type": "integer", "minimum": 1},
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["model", "prompt", "status", "timeout_seconds"],
+        "properties": {
+          "model": {"type": "string", "minLength": 1},
+          "prompt": {"type": "string", "minLength": 1},
+          "status": {"enum": ["returned", "timeout_or_error", "empty", "skipped"]},
+          "timeout_seconds": {"type": "integer", "minimum": 1},
+          "total_seconds": {"type": "number", "minimum": 0},
+          "content_preview": {"type": "string"},
+          "finish_reason": {"type": ["string", "null"]},
+          "error": {"type": "string"},
+          "reason": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "summaries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["model", "attempt_count", "success_count", "success_rate", "recommended_timeout_seconds", "chat_ready"],
+        "properties": {
+          "model": {"type": "string", "minLength": 1},
+          "attempt_count": {"type": "integer", "minimum": 0},
+          "success_count": {"type": "integer", "minimum": 0},
+          "success_rate": {"type": "number", "minimum": 0, "maximum": 1},
+          "avg_total_seconds": {"type": ["number", "null"]},
+          "max_total_seconds": {"type": ["number", "null"]},
+          "recommended_timeout_seconds": {"type": "integer", "minimum": 1},
+          "chat_ready": {"type": "boolean"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

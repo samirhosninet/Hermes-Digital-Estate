@@ -1,0 +1,94 @@
+{
+  "schema_version": "digital-state-manifest-v1",
+  "name": "digital-state",
+  "version": "0.1.0",
+  "description": "Portable Digital State governance profile for official Hermes Agent.",
+  "distribution": {
+    "type": "hermes_profile_distribution",
+    "install_command": "hermes profile install github.com/YOUR-ORG/hermes-digital-state --alias digital-state",
+    "update_command": "hermes profile update digital-state",
+    "run_command": "hermes -p digital-state chat"
+  },
+  "compatible_hermes": ">=0.12.0",
+  "allowed_roots": [
+    "SOUL.md",
+    "config.yaml",
+    ".env.EXAMPLE",
+    "digital-state.manifest.json",
+    "docs/governance/",
+    "skills/devops/governance-status/",
+    "specs/003-portable-digital-state-distribution/",
+    "scripts/governance/"
+  ],
+  "forbidden_paths": [
+    ".env",
+    "auth.json",
+    "sessions/",
+    "logs/",
+    "memory/",
+    ".git/",
+    "profile-export.tar.gz",
+    "config.local.yaml"
+  ],
+  "required_files": [
+    "distribution.yaml",
+    "SOUL.md",
+    "config.yaml",
+    ".env.EXAMPLE",
+    "digital-state.manifest.json",
+    "docs/governance/start-here.md",
+    "docs/governance/user-quickstart.md",
+    "docs/governance/portable-digital-state.md",
+    "skills/devops/governance-status/SKILL.md",
+    "scripts/governance/bootstrap_digital_state.py",
+    "scripts/governance/check_portability.py",
+    "scripts/governance/read_governance_status.py",
+    "docs/governance/update-and-recovery.md",
+    "docs/governance/github-distribution-maintenance.md",
+    "docs/governance/e2e-fullstack-release.md",
+    "specs/003-portable-digital-state-distribution/schemas/update-safety-contract-v1.json",
+    "specs/003-portable-digital-state-distribution/fixtures/update-safety-contract.json",
+    "docs/governance/model-ministry-routing.md",
+    "specs/003-portable-digital-state-distribution/schemas/model-ministry-routing-v1.json",
+    "specs/003-portable-digital-state-distribution/fixtures/model-ministry-routing.json",
+    "specs/003-portable-digital-state-distribution/model-ministry-readiness.md"
+  ],
+  "required_checks": [
+    "python3 scripts/governance/bootstrap_digital_state.py --json",
+    "python3 scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution scripts/governance",
+    "hermes config check"
+  ],
+  "supported_modes": [
+    "personal",
+    "team",
+    "enterprise",
+    "government",
+    "space-planning"
+  ],
+  "local_credentials": [
+    "NVIDIA_API_KEY",
+    "OPENROUTER_API_KEY",
+    "ANTHROPIC_API_KEY",
+    "VOICE_TOOLS_OPENAI_KEY"
+  ],
+  "secrets_policy": {
+    "ships_secrets": false,
+    "ships_oauth_tokens": false,
+    "ships_sessions": false,
+    "ships_logs": false,
+    "ships_memories": false
+  },
+  "update_policy": {
+    "hermes_core": "Use official Hermes Agent update flow separately.",
+    "digital_state": "Use hermes profile update digital-state.",
+    "post_update_check": "Run bootstrap_digital_state.py and portability checks after every update.",
+    "architecture": "Digital State is a Hermes Profile Distribution, not a Hermes core fork.",
+    "rollback": "Use versioned GitHub tags and reinstall/update the profile distribution; do not patch Hermes core."
+  },
+  "model_routing_policy": {
+    "type": "fixed_ministry_model_assignments",
+    "fallback_enabled": false,
+    "contract": "specs/003-portable-digital-state-distribution/fixtures/model-ministry-routing.json",
+    "pre_github_release_check": "test every ministry assigned model independently; do not substitute fallback models"
+  }
+}

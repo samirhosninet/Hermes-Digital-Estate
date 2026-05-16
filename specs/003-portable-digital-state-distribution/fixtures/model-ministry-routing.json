@@ -1,0 +1,89 @@
+{
+  "schema_version": "model-ministry-routing-v1",
+  "fallback_enabled": false,
+  "routing_policy": "fixed_ministry_model_assignments",
+  "ministries": [
+    {
+      "name": "strategy-ministry",
+      "provider": "openai-codex",
+      "model": "openai-codex:gpt-5.5",
+      "purpose": "Supreme planning, synthesis, constitution/spec decisions, final release judgment.",
+      "launch_critical": true,
+      "timeout_seconds": 300,
+      "health_status": "healthy",
+      "notes": "Primary strategic minister. Not a fallback target."
+    },
+    {
+      "name": "operations-ministry",
+      "provider": "nvidia",
+      "model": "nvidia:meta/llama-4-maverick-17b-128e-instruct",
+      "purpose": "Operational chat, user-facing workflow checks, quick execution review.",
+      "launch_critical": true,
+      "timeout_seconds": 120,
+      "health_status": "healthy",
+      "notes": "Fastest reliable NVIDIA ministry model in recent checks."
+    },
+    {
+      "name": "signals-ministry",
+      "provider": "nvidia",
+      "model": "nvidia:mistralai/mistral-large-3-675b-instruct-2512",
+      "purpose": "Risk signals, architecture review, policy gap detection, governance analysis.",
+      "launch_critical": true,
+      "timeout_seconds": 180,
+      "health_status": "healthy",
+      "notes": "Good analysis model; keep timeout higher than operations."
+    },
+    {
+      "name": "audit-office",
+      "provider": "nvidia",
+      "model": "nvidia:z-ai/glm-5.1",
+      "purpose": "Long-horizon audit review, governance traceability, consistency checks.",
+      "launch_critical": false,
+      "timeout_seconds": 420,
+      "health_status": "slow_healthy",
+      "notes": "Initial 240s attempt timed out; retry returned in 172.297s. Ministry works but is slow and not launch-critical."
+    },
+    {
+      "name": "governance-office",
+      "provider": "nvidia",
+      "model": "nvidia:deepseek-ai/deepseek-v4-flash",
+      "purpose": "Reasoning pass for governance contracts, edge cases, and implementation risks.",
+      "launch_critical": false,
+      "timeout_seconds": 480,
+      "health_status": "slow_healthy",
+      "notes": "Returned in 213.927s during ministry readiness test; not suitable for fast chat but usable for ministry-specific reasoning."
+    },
+    {
+      "name": "citizen-services",
+      "provider": "nvidia",
+      "model": "nvidia:minimaxai/minimax-m2.7",
+      "purpose": "User-facing wording, office/document clarity, onboarding simplification.",
+      "launch_critical": false,
+      "timeout_seconds": 180,
+      "health_status": "experimental",
+      "notes": "Use for language and documentation review only until behavior stabilizes."
+    },
+    {
+      "name": "research-and-space-planning",
+      "provider": "nvidia",
+      "model": "nvidia:moonshotai/kimi-k2.6",
+      "purpose": "Research synthesis, long-horizon planning, space-planning posture review.",
+      "launch_critical": false,
+      "timeout_seconds": 240,
+      "health_status": "slow_healthy",
+      "notes": "Powerful but slow/variable; ministry-specific only."
+    }
+  ],
+  "reserve_models": [
+    {
+      "model": "nvidia:deepseek-ai/deepseek-v4-pro",
+      "status": "not_launch_ready",
+      "assigned_to_ministry": false,
+      "reason": "Timed out even with extended pre-GitHub checks; must pass a future ministry readiness test before assignment."
+    }
+  ],
+  "test_policy": {
+    "pre_github_release": "Run one ministry-specific smoke/review prompt per assigned ministry model and record returned/timeout/error status.",
+    "pass_condition": "All launch_critical ministries must return. Non-critical ministries may be marked slow_healthy or experimental, but failures must be recorded honestly. No fallback substitution is allowed during the ministry test."
+  }
+}

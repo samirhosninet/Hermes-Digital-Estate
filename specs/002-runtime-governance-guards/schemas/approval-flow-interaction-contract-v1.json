@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Approval Flow Interaction Contract v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "mode",
+    "runtime_enforcement_enabled",
+    "duplicates_approval_prompt",
+    "bypasses_existing_approval",
+    "changes_terminal_execution_flow",
+    "may_block_commands",
+    "required_interaction_events",
+    "disable_flag",
+    "audit_failure_behavior",
+    "approval_failure_behavior"
+  ],
+  "properties": {
+    "schema_version": {"const": "approval-flow-interaction-contract-v1"},
+    "mode": {"const": "dry_run_log_only"},
+    "runtime_enforcement_enabled": {"const": false},
+    "duplicates_approval_prompt": {"const": false},
+    "bypasses_existing_approval": {"const": false},
+    "changes_terminal_execution_flow": {"const": false},
+    "may_block_commands": {"const": false},
+    "required_interaction_events": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 5,
+      "uniqueItems": true
+    },
+    "disable_flag": {"type": "string"},
+    "audit_failure_behavior": {"type": "string"},
+    "approval_failure_behavior": {"type": "string"},
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": false
+}

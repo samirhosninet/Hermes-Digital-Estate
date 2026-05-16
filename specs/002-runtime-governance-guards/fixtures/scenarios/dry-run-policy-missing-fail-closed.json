@@ -1,0 +1,11 @@
+{
+  "schema_version": "runtime-guard-decision-v1",
+  "decision": "fail_closed",
+  "boundary": "terminal",
+  "risk_class": "R5",
+  "reason": "policy_missing",
+  "policy_version": "unknown",
+  "policy_loaded": false,
+  "action_summary": "boundary=terminal; operation=dry_run_terminal_classification; command=pwd",
+  "action_hash": "example-policy-missing-action-hash"
+}

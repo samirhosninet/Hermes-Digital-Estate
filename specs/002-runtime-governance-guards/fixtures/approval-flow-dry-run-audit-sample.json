@@ -1,0 +1,11 @@
+{
+  "schema_version": "runtime-guard-audit-record-v1",
+  "timestamp_utc": "2026-01-01T00:00:00Z",
+  "boundary": "terminal",
+  "risk_class": "R1",
+  "decision": "allow",
+  "actor": "hermes-agent",
+  "policy_version": "runtime-guard-policy-v1",
+  "action_hash": "sha256:approval-flow-dry-run-example",
+  "redacted_action_summary": "dry-run approval interaction observed; existing approval flow unchanged; command summary redacted"
+}

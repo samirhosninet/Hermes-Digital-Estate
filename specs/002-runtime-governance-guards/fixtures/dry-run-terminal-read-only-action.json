@@ -1,0 +1,7 @@
+{
+  "boundary": "terminal",
+  "operation": "dry_run_terminal_classification",
+  "command": "pwd",
+  "read_only": true,
+  "command_class": "read_only"
+}

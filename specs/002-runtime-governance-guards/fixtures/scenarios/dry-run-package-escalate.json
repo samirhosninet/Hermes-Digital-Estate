@@ -1,0 +1,11 @@
+{
+  "schema_version": "runtime-guard-decision-v1",
+  "decision": "escalate",
+  "boundary": "package",
+  "risk_class": "R3",
+  "reason": "boundary_requires_approval",
+  "policy_version": "example-dry-run-policy-v1",
+  "policy_loaded": true,
+  "action_summary": "boundary=package; operation=dry_run_terminal_classification; command=pip install example-package",
+  "action_hash": "example-package-action-hash"
+}

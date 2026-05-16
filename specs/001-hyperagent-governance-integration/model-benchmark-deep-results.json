@@ -1,0 +1,194 @@
+{
+  "base_url": "https://integrate.api.nvidia.com/v1",
+  "created_at": "2026-05-15T10:03:36.047122+00:00",
+  "ok": true,
+  "provider": "nvidia",
+  "repeat": 3,
+  "results": [
+    {
+      "content_preview": "OK",
+      "finish_reason": "stop",
+      "model": "mistralai/mistral-large-3-675b-instruct-2512",
+      "prompt": "smoke",
+      "status": "returned",
+      "timeout_seconds": 180,
+      "total_seconds": 33.85
+    },
+    {
+      "content_preview": "OK",
+      "finish_reason": "stop",
+      "model": "mistralai/mistral-large-3-675b-instruct-2512",
+      "prompt": "smoke",
+      "status": "returned",
+      "timeout_seconds": 180,
+      "total_seconds": 10.722
+    },
+    {
+      "content_preview": "OK",
+      "finish_reason": "stop",
+      "model": "mistralai/mistral-large-3-675b-instruct-2512",
+      "prompt": "smoke",
+      "status": "returned",
+      "timeout_seconds": 180,
+      "total_seconds": 3.571
+    },
+    {
+      "content_preview": "Portable governance ensures an AI agent operates consistently across different environments, maintaining alignment with ethical, legal, and operational standards regardless of deployment context. It also enables seamless updates, accountability, and interoperability, reducing risks of misuse or misalignment as the agent adapts to new tasks or jurisdictions.",
+      "finish_reason": "stop",
+      "model": "mistralai/mistral-large-3-675b-instruct-2512",
+      "prompt": "chat",
+      "status": "returned",
+      "timeout_seconds": 180,
+      "total_seconds": 11.568
+    },
+    {
+      "error": "TimeoutError: The read operation timed out",
+      "model": "mistralai/mistral-large-3-675b-instruct-2512",
+      "prompt": "chat",
+      "status": "timeout_or_error",
+      "timeout_seconds": 180,
+      "total_seconds": 180.275
+    },
+    {
+      "content_preview": "Portable governance ensures an AI agent operates consistently across different environments, maintaining ethical, legal, and operational standards regardless of deployment context. It also enables seamless accountability, scalability, and trust by decoupling compliance from platform-specific constraints.",
+      "finish_reason": "stop",
+      "model": "mistralai/mistral-large-3-675b-instruct-2512",
+      "prompt": "chat",
+      "status": "returned",
+      "timeout_seconds": 180,
+      "total_seconds": 27.189
+    },
+    {
+      "content_preview": "### **Five Risks of Adding Runtime Governance Guards to an AI Agent**\n\n1. **Performance Overhead** \u2013 Additional checks may slow down response times or increase computational costs.\n2. **False Positives/Negatives** \u2013 Governance rules may incorrectly flag or miss harmful actions, reducing reliability.\n3. **Over-Restriction** \u2013 Excessive guards could limit the agent\u2019s functionality, making it less useful.\n4. **Evasion Risks** \u2013 Sophisticated AI may find ways to bypass or manipulate governance mecha",
+      "finish_reason": "length",
+      "model": "mistralai/mistral-large-3-675b-instruct-2512",
+      "prompt": "analysis",
+      "status": "returned",
+      "timeout_seconds": 180,
+      "total_seconds": 41.131
+    },
+    {
+      "content_preview": "### **Five Risks of Adding Runtime Governance Guards to an AI Agent**\n\n1. **Performance Overhead** \u2013 Additional checks may slow down response times or increase computational costs.\n2. **False Positives/Negatives** \u2013 Governance rules may incorrectly flag or miss harmful actions, reducing reliability.\n3. **Over-Restriction** \u2013 Excessive guards could limit the agent\u2019s functionality, making it less useful.\n4. **Evasion Risks** \u2013 Sophisticated agents may find ways to bypass or manipulate governance r",
+      "finish_reason": "length",
+      "model": "mistralai/mistral-large-3-675b-instruct-2512",
+      "prompt": "analysis",
+      "status": "returned",
+      "timeout_seconds": 180,
+      "total_seconds": 38.245
+    },
+    {
+      "content_preview": "### **Five Risks of Adding Runtime Governance Guards to an AI Agent**\n\n1. **Performance Overhead** \u2013 Additional checks may slow down response times or increase computational costs.\n2. **False Positives/Negatives** \u2013 Governance rules may incorrectly flag or miss harmful actions, reducing reliability.\n3. **Over-Restriction** \u2013 Excessive guards could limit the AI\u2019s functionality, making it less useful.\n4. **Evasion Risks** \u2013 Sophisticated attacks may bypass governance checks if not properly secured",
+      "finish_reason": "length",
+      "model": "mistralai/mistral-large-3-675b-instruct-2512",
+      "prompt": "analysis",
+      "status": "returned",
+      "timeout_seconds": 180,
+      "total_seconds": 57.313
+    },
+    {
+      "content_preview": "OK",
+      "finish_reason": "stop",
+      "model": "meta/llama-4-maverick-17b-128e-instruct",
+      "prompt": "smoke",
+      "status": "returned",
+      "timeout_seconds": 180,
+      "total_seconds": 0.572
+    },
+    {
+      "content_preview": "OK",
+      "finish_reason": "stop",
+      "model": "meta/llama-4-maverick-17b-128e-instruct",
+      "prompt": "smoke",
+      "status": "returned",
+      "timeout_seconds": 180,
+      "total_seconds": 0.603
+    },
+    {
+      "content_preview": "OK",
+      "finish_reason": "stop",
+      "model": "meta/llama-4-maverick-17b-128e-instruct",
+      "prompt": "smoke",
+      "status": "returned",
+      "timeout_seconds": 180,
+      "total_seconds": 0.538
+    },
+    {
+      "content_preview": "Portable governance matters for an AI agent because it enables the agent to operate effectively and make decisions in diverse environments and contexts, without being limited by a fixed or rigid set of rules. By having a portable governance framework, an AI agent can adapt to changing circumstances, navigate different regulatory requirements, and maintain its autonomy and decision-making capabilities.",
+      "finish_reason": "stop",
+      "model": "meta/llama-4-maverick-17b-128e-instruct",
+      "prompt": "chat",
+      "status": "returned",
+      "timeout_seconds": 180,
+      "total_seconds": 1.872
+    },
+    {
+      "content_preview": "Portable governance matters for an AI agent because it enables the agent to operate effectively and make decisions in diverse environments and contexts, without being limited by a fixed or rigid set of rules. By having a portable governance framework, an AI agent can adapt to changing circumstances, navigate different regulatory requirements, and maintain its autonomy and decision-making capabilities.",
+      "finish_reason": "stop",
+      "model": "meta/llama-4-maverick-17b-128e-instruct",
+      "prompt": "chat",
+      "status": "returned",
+      "timeout_seconds": 180,
+      "total_seconds": 1.579
+    },
+    {
+      "content_preview": "Portable governance matters for an AI agent because it enables the agent to operate effectively and make decisions in diverse environments and contexts, without being limited by a fixed or rigid set of rules. By having a portable governance framework, an AI agent can adapt to changing circumstances, navigate different regulatory and cultural landscapes, and maintain its autonomy and decision-making capabilities.",
+      "finish_reason": "stop",
+      "model": "meta/llama-4-maverick-17b-128e-instruct",
+      "prompt": "chat",
+      "status": "returned",
+      "timeout_seconds": 180,
+      "total_seconds": 2.595
+    },
+    {
+      "content_preview": "Here are five risks and five mitigations for adding runtime governance guards to an AI agent -\n\n**Risks -**\n\n1. **Over-restriction** - Limiting the agent's capabilities.\n2. **False positives** - Unnecessarily flagging valid actions.\n3. **Performance overhead** - Introducing latency or computational costs.\n4. **Complexity** - Increasing the system's complexity and maintenance burden.\n5. **Inflexibility** - Failing to adapt to changing environments or requirements.\n\n**Mitigations -**\n\n1. **Phased rollout*",
+      "finish_reason": "length",
+      "model": "meta/llama-4-maverick-17b-128e-instruct",
+      "prompt": "analysis",
+      "status": "returned",
+      "timeout_seconds": 180,
+      "total_seconds": 2.382
+    },
+    {
+      "content_preview": "Here are five risks and five mitigations for adding runtime governance guards to an AI agent -\n\n**Risks -**\n\n1. **Over-restriction** - Limiting the agent's capabilities.\n2. **False positives** - Unnecessarily flagging valid actions.\n3. **Performance overhead** - Introducing latency or slowdowns.\n4. **Complexity** - Increasing the system's complexity.\n5. **Evasion techniques** - Adversaries finding ways to bypass guards.\n\n**Mitigations -**\n\n1. **Phased rollout** - Gradually introduce guards to minimize im",
+      "finish_reason": "length",
+      "model": "meta/llama-4-maverick-17b-128e-instruct",
+      "prompt": "analysis",
+      "status": "returned",
+      "timeout_seconds": 180,
+      "total_seconds": 3.05
+    },
+    {
+      "content_preview": "Here are five risks and five mitigations for adding runtime governance guards to an AI agent -\n\n**Risks -**\n\n1. **Over-restriction** - Limiting the agent's capabilities.\n2. **False positives** - Unnecessarily flagging valid actions.\n3. **Performance overhead** - Introducing latency or slowdowns.\n4. **Complexity** - Increasing the system's complexity.\n5. **Evasion techniques** - Agents adapting to evade guards.\n\n**Mitigations -**\n\n1. **Phased rollout** - Gradually introduce guards to minimize impact.\n2. *",
+      "finish_reason": "length",
+      "model": "meta/llama-4-maverick-17b-128e-instruct",
+      "prompt": "analysis",
+      "status": "returned",
+      "timeout_seconds": 180,
+      "total_seconds": 2.594
+    }
+  ],
+  "schema_version": "model-benchmark-v1",
+  "suite": "all",
+  "summaries": [
+    {
+      "attempt_count": 9,
+      "avg_total_seconds": 27.949,
+      "chat_ready": true,
+      "max_total_seconds": 57.313,
+      "model": "mistralai/mistral-large-3-675b-instruct-2512",
+      "recommended_timeout_seconds": 104,
+      "success_count": 8,
+      "success_rate": 0.889
+    },
+    {
+      "attempt_count": 9,
+      "avg_total_seconds": 1.754,
+      "chat_ready": true,
+      "max_total_seconds": 3.05,
+      "model": "meta/llama-4-maverick-17b-128e-instruct",
+      "recommended_timeout_seconds": 60,
+      "success_count": 9,
+      "success_rate": 1.0
+    }
+  ]
+}

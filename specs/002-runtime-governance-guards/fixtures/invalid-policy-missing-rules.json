@@ -1,0 +1,5 @@
+{
+  "schema_version": "runtime-guard-policy-v1",
+  "mode": "strict",
+  "default_decision": "fail_closed"
+}

@@ -1,0 +1,16 @@
+diff --git a/plugins/model-providers/nvidia/__init__.py b/plugins/model-providers/nvidia/__init__.py
+index f6fdc550f..4ceeb1270 100644
+--- a/plugins/model-providers/nvidia/__init__.py
++++ b/plugins/model-providers/nvidia/__init__.py
+@@ -11,6 +11,11 @@ nvidia = ProviderProfile(
+     description="NVIDIA NIM — accelerated inference",
+     signup_url="https://build.nvidia.com/",
+     fallback_models=(
++        "moonshotai/kimi-k2.6",
++        "deepseek-ai/deepseek-v4-pro",
++        "minimaxai/minimax-m2.7",
++        "mistralai/mistral-large-3-675b-instruct-2512",
++        "meta/llama-4-maverick-17b-128e-instruct",
+         "nvidia/llama-3.1-nemotron-70b-instruct",
+         "nvidia/llama-3.3-70b-instruct",
+     ),

@@ -1,0 +1,24 @@
+{
+  "schema_version": "log-only-implementation-gate-v1",
+  "mode": "log_only",
+  "runtime_enforcement_enabled": false,
+  "may_block_commands": false,
+  "changes_terminal_execution_flow": false,
+  "default_failure_behavior": "continue_without_governance_block",
+  "required_evidence_before_runtime_touchpoint": [
+    "explicit_operator_approval",
+    "terminal_hook_contract_passed",
+    "approval_flow_contract_passed",
+    "unit_tests_passed",
+    "portability_check_passed",
+    "rollback_plan_documented"
+  ],
+  "runtime_touchpoint_constraints": [
+    "one_small_hook_only",
+    "no_command_mutation",
+    "no_additional_approval_prompt",
+    "audit_write_failure_non_blocking",
+    "feature_flag_disable_path"
+  ],
+  "rollback": "disable_governance_terminal_dry_run_or_remove_single_hook"
+}

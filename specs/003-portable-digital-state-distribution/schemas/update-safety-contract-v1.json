@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Digital State Update Safety Contract",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "architecture",
+    "hermes_core_policy",
+    "digital_state_update_policy",
+    "post_update_checks",
+    "rollback",
+    "forbidden_update_contents"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "update-safety-contract-v1"
+    },
+    "architecture": {
+      "const": "profile_distribution_not_core_fork"
+    },
+    "hermes_core_policy": {
+      "type": "object"
+    },
+    "digital_state_update_policy": {
+      "type": "object"
+    },
+    "post_update_checks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rollback": {
+      "type": "object"
+    },
+    "forbidden_update_contents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

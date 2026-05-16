@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hermes Model Council Review Record v1",
+  "type": "object",
+  "required": [
+    "model",
+    "provider",
+    "status",
+    "timestamp_utc"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "model-review-v1"
+    },
+    "model": {
+      "type": "string"
+    },
+    "provider": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "returned",
+        "timeout_or_error",
+        "empty",
+        "skipped"
+      ]
+    },
+    "seconds": {
+      "type": "number"
+    },
+    "timestamp_utc": {
+      "type": "string"
+    },
+    "error": {
+      "type": "string"
+    },
+    "content_hash": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

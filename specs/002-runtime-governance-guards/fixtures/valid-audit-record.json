@@ -1,0 +1,14 @@
+{
+  "schema_version": "runtime-guard-audit-record-v1",
+  "timestamp_utc": "2026-05-15T10:00:00Z",
+  "boundary": "package",
+  "risk_class": "R3",
+  "decision": "escalate",
+  "actor": "assistant",
+  "policy_version": "runtime-guard-policy-v1",
+  "matched_rule_id": "escalate-package-mutation",
+  "action_hash": "0123456789abcdef",
+  "redacted_action_summary": "package manager command affecting lockfile",
+  "secret_redaction_applied": true,
+  "approval_reference": null
+}

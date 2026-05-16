@@ -1,0 +1,20 @@
+{
+  "schema_version": "approval-flow-interaction-contract-v1",
+  "mode": "dry_run_log_only",
+  "runtime_enforcement_enabled": false,
+  "duplicates_approval_prompt": false,
+  "bypasses_existing_approval": false,
+  "changes_terminal_execution_flow": false,
+  "may_block_commands": false,
+  "required_interaction_events": [
+    "proposed_terminal_action",
+    "governance_dry_run_decision",
+    "existing_approval_flow_observed",
+    "terminal_execution_continues_unchanged",
+    "redacted_audit_record_written_or_buffered"
+  ],
+  "disable_flag": "governance.terminal_dry_run_enabled=false",
+  "audit_failure_behavior": "continue_terminal_flow_and_record_local_error",
+  "approval_failure_behavior": "defer_to_existing_approval_flow",
+  "notes": "Design contract only. The future dry-run hook must observe and log alongside the existing approval flow without replacing, bypassing, duplicating, or reordering it."
+}

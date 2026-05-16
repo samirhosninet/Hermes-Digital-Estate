@@ -1,0 +1,67 @@
+{
+  "schema_version": "model-council-v1",
+  "created_for": "feature-002-runtime-governance-guards-design-review",
+  "digest_path": "specs/002-runtime-governance-guards/model-council-digest.md",
+  "timestamp_utc": "2026-05-15T09:39:27Z",
+  "results": [
+    {
+      "provider": "nvidia",
+      "model": "deepseek-ai/deepseek-v4-flash",
+      "status": "timeout_or_error",
+      "seconds": 75.29,
+      "error": "The read operation timed out; retry: The read operation timed out"
+    },
+    {
+      "provider": "nvidia",
+      "model": "deepseek-ai/deepseek-v4-pro",
+      "status": "timeout_or_error",
+      "seconds": 75.3,
+      "error": "The read operation timed out; retry: The read operation timed out"
+    },
+    {
+      "provider": "nvidia",
+      "model": "meta/llama-4-maverick-17b-128e-instruct",
+      "status": "returned",
+      "seconds": 3.89,
+      "content": "Here's the governance revie[windows-drive-path]n\n**1. Top risks**\n- Inadequate policy artifact format/design may lead to inflexibility or complexity in future implementations.\n- Integration with existing Hermes approvals may be more complicated than anticipated, potentially causing bypass or override of intended governance.\n\n**2. Missing acceptance criteria**\n- Specific criteria for determining when to \"escalate\" decisions.\n- Details on how portability across machines will be achieved and verified.\n- Clarification on what constitutes \"secrets\" that the audit writer should avoid.\n\n**3. Recommended first implementation slice if later approved**\n- Implement governance guard for a single side effect (e.g., network) with a basic policy artifact format and decision engine to test the overall architecture.\n\n**4. No-go warnings**\n- If the design does not adequately address potential conflicts or interactions with existing Hermes approvals, it may be a no-go.\n- If the policy artifact format is not flexible or extensible, it could be a no-go.\n\n**5. Should it remain design-only now? yes**\nThe feature should remain design-only now because it has not been implemented, and there are still key requirements and risks to be addressed. Further design refinement and testing of assumptions are necessary before proceeding with implementation.",
+      "content_hash": "2fb626bf289eb84f"
+    },
+    {
+      "provider": "nvidia",
+      "model": "minimaxai/minimax-m2.7",
+      "status": "timeout_or_error",
+      "seconds": 75.29,
+      "error": "The read operation timed out; retry: The read operation timed out"
+    },
+    {
+      "provider": "nvidia",
+      "model": "mistralai/mistral-large-3-675b-instruct-2512",
+      "status": "timeout_or_error",
+      "seconds": 0.35,
+      "error": "HTTP Error 400: Bad Request; retry: HTTP Error 400: Bad Request"
+    },
+    {
+      "provider": "nvidia",
+      "model": "moonshotai/kimi-k2.6",
+      "status": "timeout_or_error",
+      "seconds": 75.28,
+      "error": "The read operation timed out; retry: The read operation timed out"
+    },
+    {
+      "provider": "nvidia",
+      "model": "z-ai/glm-5.1",
+      "status": "timeout_or_error",
+      "seconds": 75.3,
+      "error": "The read operation timed out; retry: The read operation timed out"
+    },
+    {
+      "provider": "openai-codex",
+      "model": "gpt-5.5",
+      "status": "returned",
+      "seconds": 0,
+      "content": "Current-session planner will synthesize returned Model Council outputs and update Feature 002 design artifacts. No runtime code changes approved.",
+      "content_hash": "de7e51dea92f1f5c"
+    }
+  ],
+  "retry_timestamp_utc": "2026-05-15T09:40:46Z"
+}

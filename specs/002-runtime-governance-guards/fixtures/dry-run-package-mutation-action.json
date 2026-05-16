@@ -1,0 +1,7 @@
+{
+  "boundary": "package",
+  "operation": "dry_run_terminal_classification",
+  "command": "pip install requests",
+  "read_only": false,
+  "command_class": "package_mutation"
+}

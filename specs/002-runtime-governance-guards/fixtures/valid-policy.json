@@ -1,0 +1,39 @@
+{
+  "schema_version": "runtime-guard-policy-v1",
+  "policy_id": "portable-digital-state-default-design-policy",
+  "mode": "design_only",
+  "portable": true,
+  "default_decision": "escalate",
+  "rules": [
+    {
+      "id": "allow-read-only-terminal",
+      "boundary": "terminal",
+      "risk_class": "R1",
+      "decision": "allow",
+      "match": {
+        "command_class": "read_only"
+      },
+      "reason": "Read-only inspection is allowed in design mode."
+    },
+    {
+      "id": "escalate-package-mutation",
+      "boundary": "package",
+      "risk_class": "R3",
+      "decision": "escalate",
+      "match": {
+        "changes_lockfile": true
+      },
+      "reason": "Dependency or lockfile changes require operator approval."
+    },
+    {
+      "id": "deny-credential-exfiltration",
+      "boundary": "credentials",
+      "risk_class": "R4",
+      "decision": "deny",
+      "match": {
+        "secret_path": true
+      },
+      "reason": "Credential exfiltration is forbidden."
+    }
+  ]
+}

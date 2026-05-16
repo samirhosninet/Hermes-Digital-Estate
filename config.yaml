@@ -1,0 +1,56 @@
+# Digital State profile defaults. Secrets belong in .env, never here.
+provider: openai-codex
+model: gpt-5.5
+
+compression:
+  enabled: true
+  threshold: 0.5
+  target_ratio: 0.2
+  protect_last_n: 20
+
+security:
+  redact_secrets: true
+
+privacy:
+  redact_pii: true
+
+approvals:
+  mode: manual
+
+digital_state:
+  model_routing:
+    fallback_enabled: false
+    policy: fixed_ministry_model_assignments
+    contract: specs/003-portable-digital-state-distribution/fixtures/model-ministry-routing.json
+  model_ministries:
+    strategy-ministry:
+      provider: openai-codex
+      model: gpt-5.5
+    operations-ministry:
+      provider: nvidia
+      model: meta/llama-4-maverick-17b-128e-instruct
+    signals-ministry:
+      provider: nvidia
+      model: mistralai/mistral-large-3-675b-instruct-2512
+    audit-office:
+      provider: nvidia
+      model: z-ai/glm-5.1
+      timeout_seconds: 420
+    governance-office:
+      provider: nvidia
+      model: deepseek-ai/deepseek-v4-flash
+      timeout_seconds: 480
+    citizen-services:
+      provider: nvidia
+      model: minimaxai/minimax-m2.7
+    research-and-space-planning:
+      provider: nvidia
+      model: moonshotai/kimi-k2.6
+
+agent:
+  system_prompt: >-
+    For project, governance, portability, institution, government, space-planning,
+    Model Council, bootstrap, or Digital State work, follow the local Spec Kit
+    workflow and governance-status guidance first. Keep runtime enforcement
+    blocked unless an explicit Operator Approval Record grants one exact
+    log-only touchpoint with rollback.

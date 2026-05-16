@@ -1,0 +1,7 @@
+{
+  "boundary": "git_destructive",
+  "operation": "dry_run_terminal_classification",
+  "command": "git reset --hard HEAD~1",
+  "read_only": false,
+  "command_class": "git_destructive"
+}

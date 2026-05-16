@@ -1,0 +1,40 @@
+diff --git a/hermes_cli/models.py b/hermes_cli/models.py
+index eb55b59ee..74d15c305 100644
+--- a/hermes_cli/models.py
++++ b/hermes_cli/models.py
+@@ -242,7 +242,11 @@ _PROVIDER_MODELS: dict[str, list[str]] = {
+         "qwen/qwen3.5-397b-a17b",
+         "deepseek-ai/deepseek-v3.2",
+         "moonshotai/kimi-k2.6",
++        "deepseek-ai/deepseek-v4-pro",
++        "minimaxai/minimax-m2.7",
+         "minimaxai/minimax-m2.5",
++        "mistralai/mistral-large-3-675b-instruct-2512",
++        "meta/llama-4-maverick-17b-128e-instruct",
+         "z-ai/glm5",
+         "openai/gpt-oss-120b",
+     ],
+@@ -2049,15 +2053,21 @@ def _merge_with_models_dev(provider: str, curated: list[str]) -> list[str]:
+         return list(curated)
+ 
+     # Case-insensitive dedup while preserving order and curated casing.
++    # NVIDIA's live /models catalog is very large and its ordering often pushes
++    # flagship Build/NIM agent models out of the first picker page. Keep the
++    # curated NVIDIA shortlist first, then append newly discovered live models.
++    preferred_first = list(curated) if provider == "nvidia" else list(mdev)
++    appended = list(mdev) if provider == "nvidia" else list(curated)
++
+     seen_lower: set[str] = set()
+     merged: list[str] = []
+-    for mid in mdev:
++    for mid in preferred_first:
+         key = str(mid).lower()
+         if key in seen_lower:
+             continue
+         seen_lower.add(key)
+         merged.append(mid)
+-    for mid in curated:
++    for mid in appended:
+         key = str(mid).lower()
+         if key in seen_lower:
+             continue

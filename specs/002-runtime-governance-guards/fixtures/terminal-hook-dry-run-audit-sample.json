@@ -1,0 +1,15 @@
+{
+  "schema_version": "runtime-guard-audit-record-v1",
+  "timestamp_utc": "2026-01-01T00:00:00Z",
+  "actor": "assistant",
+  "policy_version": "example-policy-v1",
+  "policy_loaded": true,
+  "boundary": "terminal",
+  "risk_class": "R0",
+  "decision": "allow",
+  "reason": "read_only_allowed",
+  "redacted_action_summary": "terminal command classified as read_only",
+  "action_hash": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+  "secret_redaction_applied": false,
+  "approval_reference": null
+}

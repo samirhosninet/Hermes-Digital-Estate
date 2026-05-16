@@ -1,0 +1,34 @@
+{
+  "schema_version": "update-safety-contract-v1",
+  "architecture": "profile_distribution_not_core_fork",
+  "hermes_core_policy": {
+    "owner": "official_hermes_agent",
+    "update_flow": "official_hermes_update_flow",
+    "digital_state_may_modify_core": false,
+    "runtime_changes_allowed_in_feature_003": false
+  },
+  "digital_state_update_policy": {
+    "primary_update_command": "hermes profile update digital-state",
+    "distribution_source": "github_profile_distribution",
+    "custom_import_export_primary": false,
+    "standalone_ui_primary": false
+  },
+  "post_update_checks": [
+    "python3 scripts/governance/bootstrap_digital_state.py --json",
+    "python3 scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution scripts/governance",
+    "hermes config check"
+  ],
+  "rollback": {
+    "requires_versioned_github_tags": true,
+    "example_command": "hermes profile install github.com/YOUR-ORG/hermes-digital-state@v0.1.0 --alias digital-state"
+  },
+  "forbidden_update_contents": [
+    ".env",
+    "auth.json",
+    "sessions/",
+    "logs/",
+    "memory/",
+    "Hermes core runtime modifications",
+    "machine-specific paths"
+  ]
+}

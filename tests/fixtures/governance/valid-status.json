@@ -1,0 +1,30 @@
+{
+  "schema_version": "governance-status-v1",
+  "state_name": "Hermes Portable Digital State",
+  "phase": "docs-only",
+  "posture": "read-only",
+  "portable": true,
+  "artifacts": [
+    "specs/001-hyperagent-governance-integration/constitution.md",
+    "docs/governance/digital-state-governance.md",
+    "skills/devops/governance-status/SKILL.md"
+  ],
+  "model_council": {
+    "returned": [
+      "gpt-5.5",
+      "z-ai/glm-5.1",
+      "mistralai/mistral-large-3-675b-instruct-2512",
+      "moonshotai/kimi-k2.6",
+      "meta/llama-4-maverick-17b-128e-instruct"
+    ],
+    "timeout_or_error": [
+      "deepseek-ai/deepseek-v4-pro",
+      "deepseek-ai/deepseek-v4-flash",
+      "minimaxai/minimax-m2.7"
+    ],
+    "quorum_met": true
+  },
+  "warnings": [
+    "Runtime enforcement is not active in this phase."
+  ]
+}

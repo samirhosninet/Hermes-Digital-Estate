@@ -1,0 +1,142 @@
+{
+  "base_url": "https://integrate.api.nvidia.com/v1",
+  "created_at": "2026-05-15T21:54:15.690499+00:00",
+  "ok": true,
+  "provider": "nvidia",
+  "repeat": 1,
+  "results": [
+    {
+      "error": "TimeoutError: The read operation timed out",
+      "model": "z-ai/glm-5.1",
+      "prompt": "smoke",
+      "status": "timeout_or_error",
+      "timeout_seconds": 60,
+      "total_seconds": 60.377
+    },
+    {
+      "error": "TimeoutError: The read operation timed out",
+      "model": "deepseek-ai/deepseek-v4-pro",
+      "prompt": "smoke",
+      "status": "timeout_or_error",
+      "timeout_seconds": 60,
+      "total_seconds": 60.215
+    },
+    {
+      "content_preview": "OK",
+      "finish_reason": "stop",
+      "model": "deepseek-ai/deepseek-v4-flash",
+      "prompt": "smoke",
+      "status": "returned",
+      "timeout_seconds": 60,
+      "total_seconds": 42.683
+    },
+    {
+      "error": "TimeoutError: The read operation timed out",
+      "model": "mistralai/mistral-large-3-675b-instruct-2512",
+      "prompt": "smoke",
+      "status": "timeout_or_error",
+      "timeout_seconds": 60,
+      "total_seconds": 60.288
+    },
+    {
+      "content_preview": "The user says: \"Reply with exactly: OK\". So they want the assistant to reply with exactly \"OK\". This is a simple request. There's no policy",
+      "finish_reason": "length",
+      "model": "minimaxai/minimax-m2.7",
+      "prompt": "smoke",
+      "status": "returned",
+      "timeout_seconds": 60,
+      "total_seconds": 18.962
+    },
+    {
+      "error": "TimeoutError: The read operation timed out",
+      "model": "moonshotai/kimi-k2.6",
+      "prompt": "smoke",
+      "status": "timeout_or_error",
+      "timeout_seconds": 60,
+      "total_seconds": 60.246
+    },
+    {
+      "content_preview": "OK",
+      "finish_reason": "stop",
+      "model": "meta/llama-4-maverick-17b-128e-instruct",
+      "prompt": "smoke",
+      "status": "returned",
+      "timeout_seconds": 60,
+      "total_seconds": 17.116
+    }
+  ],
+  "schema_version": "model-benchmark-v1",
+  "suite": "smoke",
+  "summaries": [
+    {
+      "attempt_count": 1,
+      "avg_total_seconds": null,
+      "chat_ready": false,
+      "max_total_seconds": null,
+      "model": "z-ai/glm-5.1",
+      "recommended_timeout_seconds": 60,
+      "success_count": 0,
+      "success_rate": 0.0
+    },
+    {
+      "attempt_count": 1,
+      "avg_total_seconds": null,
+      "chat_ready": false,
+      "max_total_seconds": null,
+      "model": "deepseek-ai/deepseek-v4-pro",
+      "recommended_timeout_seconds": 60,
+      "success_count": 0,
+      "success_rate": 0.0
+    },
+    {
+      "attempt_count": 1,
+      "avg_total_seconds": 42.683,
+      "chat_ready": true,
+      "max_total_seconds": 42.683,
+      "model": "deepseek-ai/deepseek-v4-flash",
+      "recommended_timeout_seconds": 86,
+      "success_count": 1,
+      "success_rate": 1.0
+    },
+    {
+      "attempt_count": 1,
+      "avg_total_seconds": null,
+      "chat_ready": false,
+      "max_total_seconds": null,
+      "model": "mistralai/mistral-large-3-675b-instruct-2512",
+      "recommended_timeout_seconds": 60,
+      "success_count": 0,
+      "success_rate": 0.0
+    },
+    {
+      "attempt_count": 1,
+      "avg_total_seconds": 18.962,
+      "chat_ready": true,
+      "max_total_seconds": 18.962,
+      "model": "minimaxai/minimax-m2.7",
+      "recommended_timeout_seconds": 60,
+      "success_count": 1,
+      "success_rate": 1.0
+    },
+    {
+      "attempt_count": 1,
+      "avg_total_seconds": null,
+      "chat_ready": false,
+      "max_total_seconds": null,
+      "model": "moonshotai/kimi-k2.6",
+      "recommended_timeout_seconds": 60,
+      "success_count": 0,
+      "success_rate": 0.0
+    },
+    {
+      "attempt_count": 1,
+      "avg_total_seconds": 17.116,
+      "chat_ready": true,
+      "max_total_seconds": 17.116,
+      "model": "meta/llama-4-maverick-17b-128e-instruct",
+      "recommended_timeout_seconds": 60,
+      "success_count": 1,
+      "success_rate": 1.0
+    }
+  ]
+}

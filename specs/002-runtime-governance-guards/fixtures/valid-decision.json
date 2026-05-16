@@ -1,0 +1,11 @@
+{
+  "schema_version": "runtime-guard-decision-v1",
+  "decision": "escalate",
+  "boundary": "package",
+  "risk_class": "R3",
+  "reason": "Dependency or lockfile mutation requires operator approval.",
+  "policy_version": "runtime-guard-policy-v1",
+  "matched_rule_id": "escalate-package-mutation",
+  "requires_operator_approval": true,
+  "redacted_action_summary": "package manager command affecting lockfile"
+}

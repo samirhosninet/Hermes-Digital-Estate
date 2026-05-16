@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Digital State Manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "name",
+    "version",
+    "distribution",
+    "compatible_hermes",
+    "allowed_roots",
+    "forbidden_paths",
+    "required_files",
+    "required_checks",
+    "supported_modes",
+    "local_credentials",
+    "secrets_policy",
+    "update_policy"
+  ],
+  "properties": {
+    "schema_version": {"const": "digital-state-manifest-v1"},
+    "name": {"type": "string"},
+    "version": {"type": "string"},
+    "description": {"type": "string"},
+    "distribution": {
+      "type": "object",
+      "required": ["type", "install_command", "update_command", "run_command"],
+      "properties": {
+        "type": {"const": "hermes_profile_distribution"},
+        "install_command": {"type": "string"},
+        "update_command": {"type": "string"},
+        "run_command": {"type": "string"}
+      }
+    },
+    "compatible_hermes": {"type": "string"},
+    "allowed_roots": {"type": "array", "items": {"type": "string"}},
+    "forbidden_paths": {"type": "array", "items": {"type": "string"}},
+    "required_files": {"type": "array", "items": {"type": "string"}},
+    "required_checks": {"type": "array", "items": {"type": "string"}},
+    "supported_modes": {"type": "array", "items": {"type": "string"}},
+    "local_credentials": {"type": "array", "items": {"type": "string"}},
+    "secrets_policy": {"type": "object"},
+    "update_policy": {"type": "object"}
+  },
+  "additionalProperties": true
+}

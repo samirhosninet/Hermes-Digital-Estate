@@ -1,0 +1,28 @@
+name: digital-state
+version: 0.1.0
+description: "Portable Digital State governance profile for Hermes Agent"
+hermes_requires: ">=0.12.0"
+author: "Digital State Maintainers"
+license: "MIT"
+env_requires:
+  - name: NVIDIA_API_KEY
+    description: "NVIDIA NIM API key for optional Model Council and model benchmark reviews"
+    required: false
+  - name: OPENROUTER_API_KEY
+    description: "Optional OpenRouter API key for additional model providers"
+    required: false
+  - name: ANTHROPIC_API_KEY
+    description: "Optional Anthropic API key for additional model providers"
+    required: false
+  - name: VOICE_TOOLS_OPENAI_KEY
+    description: "Optional OpenAI-compatible voice/STT/TTS key if voice features are enabled"
+    required: false
+distribution_owned:
+  - SOUL.md
+  - config.yaml
+  - .env.EXAMPLE
+  - digital-state.manifest.json
+  - docs/governance/
+  - skills/devops/governance-status/
+  - specs/003-portable-digital-state-distribution/
+  - scripts/governance/

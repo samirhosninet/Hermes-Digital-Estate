@@ -1,0 +1,11 @@
+{
+  "schema_version": "runtime-guard-decision-v1",
+  "decision": "allow",
+  "boundary": "terminal",
+  "risk_class": "R0",
+  "reason": "read_only_allowed",
+  "policy_version": "example-dry-run-policy-v1",
+  "policy_loaded": true,
+  "action_summary": "boundary=terminal; operation=dry_run_terminal_classification; command=git status",
+  "action_hash": "example-safe-read-action-hash"
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": "operator-approval-record-v1",
+  "record_id": "feature-002-t021b-no-runtime-approval",
+  "approval_status": "not_granted",
+  "runtime_scope": "none",
+  "runtime_touchpoint_allowed": false,
+  "enforcement_allowed": false,
+  "maximum_mode": "log_only",
+  "operator_identity": "not-recorded",
+  "approved_touchpoints": [],
+  "explicitly_out_of_scope": [
+    "tools/terminal",
+    "tools/file",
+    "gateway",
+    "model_routing",
+    "cron",
+    "approvals_runtime"
+  ],
+  "required_validation": [
+    "operator_approval_record_validator_passed",
+    "terminal_hook_contract_passed",
+    "approval_flow_contract_passed",
+    "log_only_implementation_gate_passed",
+    "unit_tests_passed",
+    "portability_check_passed",
+    "rollback_plan_documented"
+  ],
+  "rollback_plan": "No runtime touchpoint is currently approved. Future log-only touchpoint approval must name the exact file, flag, tests, and removal path.",
+  "operator_reapproval_required_for": [
+    "any_runtime_file_edit",
+    "any_command_blocking_behavior",
+    "any_terminal_execution_flow_change",
+    "any_new_approval_prompt",
+    "any_audit_storage_location_change",
+    "any_scope_beyond_log_only"
+  ],
+  "notes": "This record deliberately grants no runtime approval. It is a gate artifact for future explicit operator approval."
+}

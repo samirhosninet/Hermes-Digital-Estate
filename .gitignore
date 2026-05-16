@@ -1,0 +1,27 @@
+# === Secrets & Auth ===
+.env
+.env.*
+!.env.EXAMPLE
+auth.json
+.codex/
+
+# === Runtime Data ===
+sessions/
+logs/
+memories/
+.hermes/
+
+# === Python ===
+.venv*/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# === Node ===
+node_modules/
+
+# === OS ===
+.DS_Store
+Thumbs.db

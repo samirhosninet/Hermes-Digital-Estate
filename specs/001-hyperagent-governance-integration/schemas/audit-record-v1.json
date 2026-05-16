@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hermes Digital State Audit Record v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "timestamp_utc",
+    "actor",
+    "artifact_path",
+    "event_type",
+    "outcome"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "audit-record-v1"
+    },
+    "timestamp_utc": {
+      "type": "string"
+    },
+    "actor": {
+      "type": "string"
+    },
+    "artifact_path": {
+      "type": "string"
+    },
+    "event_type": {
+      "enum": [
+        "plan",
+        "review",
+        "validate",
+        "approve",
+        "block",
+        "bootstrap"
+      ]
+    },
+    "outcome": {
+      "enum": [
+        "ok",
+        "timeout",
+        "error",
+        "blocked",
+        "warning"
+      ]
+    },
+    "checksum_before": {
+      "type": "string"
+    },
+    "checksum_after": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

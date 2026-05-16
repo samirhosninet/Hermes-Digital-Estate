@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hermes.local/schemas/operator-approval-record-v1.json",
+  "title": "Operator Approval Record v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_id",
+    "approval_status",
+    "runtime_scope",
+    "runtime_touchpoint_allowed",
+    "enforcement_allowed",
+    "maximum_mode",
+    "operator_identity",
+    "approved_touchpoints",
+    "explicitly_out_of_scope",
+    "required_validation",
+    "rollback_plan",
+    "operator_reapproval_required_for",
+    "notes"
+  ],
+  "properties": {
+    "schema_version": {"const": "operator-approval-record-v1"},
+    "record_id": {"type": "string", "minLength": 1},
+    "approval_status": {"enum": ["not_granted", "granted", "revoked", "expired"]},
+    "runtime_scope": {"enum": ["none", "terminal_log_only", "file_log_only", "gateway_log_only", "model_routing_log_only"]},
+    "runtime_touchpoint_allowed": {"type": "boolean"},
+    "enforcement_allowed": {"type": "boolean"},
+    "maximum_mode": {"enum": ["design_only", "log_only"]},
+    "operator_identity": {"type": "string"},
+    "approved_touchpoints": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "explicitly_out_of_scope": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "required_validation": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "rollback_plan": {"type": "string", "minLength": 1},
+    "operator_reapproval_required_for": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "notes": {"type": "string"}
+  }
+}

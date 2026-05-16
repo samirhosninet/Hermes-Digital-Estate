@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hermes Digital State Governance Status v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "state_name",
+    "phase",
+    "posture",
+    "portable",
+    "artifacts",
+    "model_council",
+    "warnings"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "governance-status-v1"
+    },
+    "state_name": {
+      "type": "string"
+    },
+    "phase": {
+      "enum": [
+        "planning",
+        "docs-only",
+        "read-only-validation",
+        "enforcement-design",
+        "runtime-enforcement"
+      ]
+    },
+    "posture": {
+      "enum": [
+        "planning-only",
+        "read-only",
+        "approval-required",
+        "enforcement-active",
+        "blocked"
+      ]
+    },
+    "portable": {
+      "type": "boolean"
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "model_council": {
+      "type": "object",
+      "required": [
+        "returned",
+        "timeout_or_error",
+        "quorum_met"
+      ],
+      "properties": {
+        "returned": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "timeout_or_error": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "quorum_met": {
+          "type": "boolean"
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

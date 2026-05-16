@@ -1,0 +1,19 @@
+{
+  "schema_version": "terminal-hook-dry-run-contract-v1",
+  "mode": "dry_run_log_only",
+  "hook_boundary": "terminal",
+  "runtime_enforcement_enabled": false,
+  "changes_terminal_execution_flow": false,
+  "may_block_commands": false,
+  "requires_existing_approval_flow": true,
+  "candidate_runtime_file": "tools/terminal_tool.py",
+  "required_evidence_before_integration": [
+    "unit_tests",
+    "dry_run_audit_sample",
+    "operator_approval_matrix",
+    "portability_check",
+    "secret_redaction_test"
+  ],
+  "rollback": "remove_hook_call_or_disable_config_flag",
+  "notes": "Design contract only. This fixture does not enable or install any terminal hook."
+}

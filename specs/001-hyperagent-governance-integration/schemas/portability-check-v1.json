@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hermes Digital State Portability Check v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "checked_at_utc",
+    "portable",
+    "checks"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "portability-check-v1"
+    },
+    "checked_at_utc": {
+      "type": "string"
+    },
+    "portable": {
+      "type": "boolean"
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "status"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pass",
+              "warn",
+              "fail"
+            ]
+          },
+          "details": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
