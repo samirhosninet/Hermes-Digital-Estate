@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hermes Digital State — Setup Wizard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0f;--bg2:#12121a;--card:rgba(255,255,255,.04);--card-border:rgba(255,255,255,.08);--text:#e2e8f0;--text2:#94a3b8;--primary:#6366f1;--primary-g:linear-gradient(135deg,#6366f1,#8b5cf6);--success:#22c55e;--warn:#f59e0b;--fail:#ef4444;--radius:16px;--font:'Inter','Noto Sans Arabic',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+html[dir=rtl] body{direction:rtl}
+.bg-glow{position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(150px);opacity:.15;pointer-events:none;z-index:0}
+.glow1{top:-200px;left:-100px;background:#6366f1}
+.glow2{bottom:-200px;right:-100px;background:#8b5cf6}
+
+/* Layout */
+.shell{max-width:900px;margin:0 auto;padding:24px 16px;position:relative;z-index:1}
+header{text-align:center;padding:40px 0 20px}
+header h1{font-size:1.8rem;font-weight:700;background:var(--primary-g);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+header p{color:var(--text2);margin-top:8px;font-size:.95rem}
+
+/* Progress bar */
+.progress{display:flex;gap:4px;margin:24px 0}
+.progress .dot{flex:1;height:4px;border-radius:2px;background:var(--card-border);transition:.3s}
+.progress .dot.done{background:var(--success)}
+.progress .dot.active{background:var(--primary)}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);padding:28px;margin-bottom:20px;backdrop-filter:blur(20px);transition:.3s}
+.card:hover{border-color:rgba(99,102,241,.3)}
+.card h2{font-size:1.2rem;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.card h2 .icon{font-size:1.4rem}
+
+/* Steps */
+.step{display:none}.step.active{display:block}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:12px;border:none;font:inherit;font-weight:600;font-size:.9rem;cursor:pointer;transition:.2s}
+.btn-primary{background:var(--primary-g);color:#fff}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(99,102,241,.3)}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--card-border)}
+.btn-ghost:hover{border-color:var(--primary);color:var(--text)}
+.btn-sm{padding:8px 16px;font-size:.8rem;border-radius:8px}
+.actions{display:flex;justify-content:space-between;margin-top:24px}
+
+/* Check items */
+.checks{display:flex;flex-direction:column;gap:8px}
+.chk{display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(255,255,255,.02);border-radius:10px;border:1px solid transparent;transition:.2s}
+.chk.pass{border-color:rgba(34,197,94,.2)}.chk.fail{border-color:rgba(239,68,68,.2)}.chk.warn{border-color:rgba(245,158,11,.2)}
+.chk .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.chk.pass .dot{background:var(--success)}.chk.fail .dot{background:var(--fail)}.chk.warn .dot{background:var(--warn)}
+.chk .label{font-weight:500;flex:1}.chk .detail{color:var(--text2);font-size:.85rem;text-align:right}
+html[dir=rtl] .chk .detail{text-align:left}
+.chk .fix{margin-left:8px}
+html[dir=rtl] .chk .fix{margin-left:0;margin-right:8px}
+
+/* Select grid */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
+.sopt{padding:20px;text-align:center;border-radius:12px;border:2px solid var(--card-border);cursor:pointer;transition:.2s;background:var(--card)}
+.sopt:hover{border-color:var(--primary);transform:translateY(-2px)}
+.sopt.sel{border-color:var(--primary);background:rgba(99,102,241,.1)}
+.sopt .emoji{font-size:2rem;margin-bottom:8px;display:block}
+.sopt .stitle{font-weight:600;font-size:.9rem}
+
+/* Form */
+.field{margin-bottom:16px}
+.field label{display:block;font-weight:500;margin-bottom:6px;font-size:.9rem}
+.field .inp-wrap{position:relative}
+.field input{width:100%;padding:12px 16px;background:rgba(255,255,255,.05);border:1px solid var(--card-border);border-radius:10px;color:var(--text);font:inherit;font-size:.9rem;transition:.2s}
+.field input:focus{outline:none;border-color:var(--primary)}
+.field .hint{color:var(--text2);font-size:.8rem;margin-top:4px}
+.toggle-pw{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text2);cursor:pointer;font-size:1.1rem}
+html[dir=rtl] .toggle-pw{right:auto;left:12px}
+
+/* Loading */
+.spinner{display:inline-block;width:20px;height:20px;border:3px solid var(--card-border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-msg{display:flex;align-items:center;gap:12px;padding:20px;color:var(--text2)}
+
+/* Summary */
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.stat{text-align:center;padding:20px;border-radius:12px;background:var(--card);border:1px solid var(--card-border)}
+.stat .num{font-size:2rem;font-weight:700}
+.stat .lbl{font-size:.8rem;color:var(--text2);margin-top:4px}
+.stat.s-pass .num{color:var(--success)}.stat.s-fail .num{color:var(--fail)}.stat.s-warn .num{color:var(--warn)}
+
+/* Lang toggle */
+.lang-toggle{position:fixed;top:16px;right:16px;z-index:10}
+html[dir=rtl] .lang-toggle{right:auto;left:16px}
+
+/* Responsive */
+@media(max-width:600px){.sgrid{grid-template-columns:1fr 1fr}.summary-grid{grid-template-columns:1fr}.shell{padding:16px 12px}header h1{font-size:1.4rem}}
+
+/* Print */
+@media print{.bg-glow,.lang-toggle,.actions,.btn{display:none!important}.card{break-inside:avoid;border:1px solid #ccc}body{background:#fff;color:#000}.chk{border:1px solid #eee}}
+</style>
+</head>
+<body>
+<div class="bg-glow glow1"></div>
+<div class="bg-glow glow2"></div>
+
+<button class="btn btn-ghost btn-sm lang-toggle" onclick="toggleLang()">العربية</button>
+
+<div class="shell">
+<header>
+<h1 id="hTitle">Hermes Digital State</h1>
+<p id="hSub">Setup Wizard — Guided readiness check</p>
+</header>
+
+<div class="progress" id="progressBar"></div>
+
+<!-- Step 0: Welcome -->
+<div class="step active" id="s0">
+<div class="card">
+<h2><span class="icon">🏠</span> <span data-i="welcome">Welcome</span></h2>
+<p data-i="welcomeDesc" style="color:var(--text2);margin-bottom:20px">Choose your language and user type to begin.</p>
+
+<label style="font-weight:500;margin-bottom:8px;display:block" data-i="userType">User Type</label>
+<div class="sgrid" id="userTypeGrid">
+<div class="sopt" data-mode="personal" onclick="selMode(this)"><span class="emoji">👤</span><span class="stitle" data-i="mPersonal">Individual</span></div>
+<div class="sopt" data-mode="team" onclick="selMode(this)"><span class="emoji">👥</span><span class="stitle" data-i="mTeam">Team</span></div>
+<div class="sopt" data-mode="enterprise" onclick="selMode(this)"><span class="emoji">🏢</span><span class="stitle" data-i="mEnterprise">Organization</span></div>
+<div class="sopt" data-mode="government" onclick="selMode(this)"><span class="emoji">🏛️</span><span class="stitle" data-i="mGov">Government</span></div>
+<div class="sopt" data-mode="space-planning" onclick="selMode(this)"><span class="emoji">🚀</span><span class="stitle" data-i="mSpace">Space Agency</span></div>
+</div>
+
+<div style="margin-top:16px">
+<label class="chk" style="cursor:pointer;border-color:var(--card-border)"><input type="checkbox" id="offlineMode" style="margin-right:8px"> <span data-i="offlineLabel">Offline / Air-Gapped Mode</span></label>
+</div>
+</div>
+<div class="actions"><div></div><button class="btn btn-primary" id="btnStart" disabled onclick="goStep(1)" data-i="begin">Begin →</button></div>
+</div>
+
+<!-- Step 1: System -->
+<div class="step" id="s1">
+<div class="card"><h2><span class="icon">🔧</span> <span data-i="sysCheck">System Check</span></h2><div id="c1" class="checks"><div class="loading-msg"><span class="spinner"></span> <span data-i="checking">Checking…</span></div></div></div>
+<div class="actions"><button class="btn btn-ghost" onclick="goStep(0)" data-i="back">← Back</button><button class="btn btn-primary" id="btn1" disabled onclick="goStep(2)" data-i="next">Next →</button></div>
+</div>
+
+<!-- Step 2: Hermes -->
+<div class="step" id="s2">
+<div class="card"><h2><span class="icon">⚡</span> <span data-i="hermesCheck">Hermes Agent</span></h2><div id="c2" class="checks"><div class="loading-msg"><span class="spinner"></span> <span data-i="checking">Checking…</span></div></div></div>
+<div class="actions"><button class="btn btn-ghost" onclick="goStep(1)" data-i="back">← Back</button><button class="btn btn-primary" id="btn2" disabled onclick="goStep(3)" data-i="next">Next →</button></div>
+</div>
+
+<!-- Step 3: Credentials -->
+<div class="step" id="s3">
+<div class="card"><h2><span class="icon">🔑</span> <span data-i="creds">Credentials</span></h2>
+<p style="color:var(--text2);margin-bottom:16px" data-i="credsDesc">Enter your API keys. They are saved locally only.</p>
+<div id="credFields"></div>
+<button class="btn btn-primary btn-sm" onclick="saveCreds()" data-i="saveCreds">💾 Save Credentials</button>
+<div id="credStatus" style="margin-top:12px"></div>
+</div>
+<div class="actions"><button class="btn btn-ghost" onclick="goStep(2)" data-i="back">← Back</button><button class="btn btn-primary" onclick="goStep(4)" data-i="next">Next →</button></div>
+</div>
+
+<!-- Step 4: Governance -->
+<div class="step" id="s4">
+<div class="card"><h2><span class="icon">🏛️</span> <span data-i="govCheck">Governance Profile</span></h2><div id="c4" class="checks"><div class="loading-msg"><span class="spinner"></span> <span data-i="checking">Checking…</span></div></div></div>
+<div class="actions"><button class="btn btn-ghost" onclick="goStep(3)" data-i="back">← Back</button><button class="btn btn-primary" id="btn4" disabled onclick="goStep(5)" data-i="next">Next →</button></div>
+</div>
+
+<!-- Step 5: Network -->
+<div class="step" id="s5">
+<div class="card"><h2><span class="icon">🌐</span> <span data-i="netCheck">Network & Services</span></h2><div id="c5" class="checks"><div class="loading-msg"><span class="spinner"></span> <span data-i="checking">Checking…</span></div></div></div>
+<div class="actions"><button class="btn btn-ghost" onclick="goStep(4)" data-i="back">← Back</button><button class="btn btn-primary" id="btn5" disabled onclick="goStep(6)" data-i="next">Next →</button></div>
+</div>
+
+<!-- Step 6: Deep Audit -->
+<div class="step" id="s6">
+<div class="card"><h2><span class="icon">🔍</span> <span data-i="auditCheck">Deep Audit</span></h2>
+<p style="color:var(--text2);margin-bottom:12px" data-i="auditDesc">Running 141-point audit, 60 tests, and portability scan…</p>
+<div id="c6" class="checks"><div class="loading-msg"><span class="spinner"></span> <span data-i="running">Running (this may take a minute)…</span></div></div></div>
+<div class="actions"><button class="btn btn-ghost" onclick="goStep(5)" data-i="back">← Back</button><button class="btn btn-primary" id="btn6" disabled onclick="goStep(7)" data-i="next">Next →</button></div>
+</div>
+
+<!-- Step 7: Summary -->
+<div class="step" id="s7">
+<div class="card">
+<h2><span class="icon">🎉</span> <span data-i="ready">Readiness Report</span></h2>
+<div class="summary-grid" id="summaryGrid"></div>
+<div id="summaryVerdict" style="text-align:center;padding:20px;font-size:1.1rem;font-weight:600"></div>
+<div style="text-align:center;margin-top:16px">
+<code style="background:var(--card);padding:12px 24px;border-radius:10px;border:1px solid var(--card-border);display:inline-block;font-size:1rem">hermes -p digital-state chat</code>
+</div>
+</div>
+<div class="actions">
+<button class="btn btn-ghost" onclick="goStep(6)" data-i="back">← Back</button>
+<div style="display:flex;gap:8px">
+<button class="btn btn-ghost btn-sm" onclick="downloadJSON()" data-i="dlJSON">📥 JSON Report</button>
+<button class="btn btn-ghost btn-sm" onclick="window.print()" data-i="dlPrint">🖨️ Print</button>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+/* ===== i18n ===== */
+const I={
+en:{welcome:"Welcome",welcomeDesc:"Choose your language and user type to begin.",userType:"User Type",mPersonal:"Individual",mTeam:"Team",mEnterprise:"Organization",mGov:"Government",mSpace:"Space Agency",offlineLabel:"Offline / Air-Gapped Mode",begin:"Begin →",sysCheck:"System Check",hermesCheck:"Hermes Agent",creds:"Credentials",credsDesc:"Enter your API keys. They are saved locally only.",saveCreds:"💾 Save Credentials",govCheck:"Governance Profile",netCheck:"Network & Services",auditCheck:"Deep Audit",auditDesc:"Running 141-point audit, 60 tests, and portability scan…",ready:"Readiness Report",back:"← Back",next:"Next →",checking:"Checking…",running:"Running (this may take a minute)…",dlJSON:"📥 JSON Report",dlPrint:"🖨️ Print",passCount:"PASS",warnCount:"WARN",failCount:"FAIL",verdictPass:"✅ DISTRIBUTION IS READY",verdictFail:"❌ ISSUES FOUND — review above"},
+ar:{welcome:"مرحباً",welcomeDesc:"اختر اللغة ونوع المستخدم للبدء.",userType:"نوع المستخدم",mPersonal:"فرد",mTeam:"فريق",mEnterprise:"مؤسسة",mGov:"حكومة",mSpace:"وكالة فضاء",offlineLabel:"وضع معزول / بدون إنترنت",begin:"ابدأ ←",sysCheck:"فحص النظام",hermesCheck:"وكيل هيرميس",creds:"المفاتيح",credsDesc:"أدخل مفاتيح API. تُحفظ محلياً فقط.",saveCreds:"💾 حفظ المفاتيح",govCheck:"ملف الحوكمة",netCheck:"الشبكة والخدمات",auditCheck:"الفحص العميق",auditDesc:"تشغيل 141 فحص، 60 اختبار، ومسح التوافقية…",ready:"تقرير الجاهزية",back:"العودة →",next:"← التالي",checking:"جارٍ الفحص…",running:"جارٍ التشغيل (قد يستغرق دقيقة)…",dlJSON:"📥 تقرير JSON",dlPrint:"🖨️ طباعة",passCount:"نجح",warnCount:"تحذير",failCount:"فشل",verdictPass:"✅ التوزيع جاهز للإصدار",verdictFail:"❌ توجد مشاكل — راجع أعلاه"}
+};
+let lang='en',csrf='',selModeVal='',offline=false,fullReport=null;
+
+function toggleLang(){
+  lang=lang==='en'?'ar':'en';
+  document.documentElement.lang=lang;
+  document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+  document.querySelector('.lang-toggle').textContent=lang==='ar'?'English':'العربية';
+  document.querySelectorAll('[data-i]').forEach(el=>{
+    const k=el.getAttribute('data-i');
+    if(I[lang][k])el.textContent=I[lang][k];
+  });
+  localStorage.setItem('hz_lang',lang);
+}
+
+/* ===== State ===== */
+const STEPS=8;
+let cur=0;
+function goStep(n){
+  if(n<0||n>=STEPS)return;
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+n).classList.add('active');
+  cur=n;
+  updateProgress();
+  localStorage.setItem('hz_step',n);
+  if(n===1)runCheck('/api/check/system','c1','btn1');
+  if(n===2)runCheck('/api/check/hermes','c2','btn2');
+  if(n===3)loadCredFields();
+  if(n===4)runCheck('/api/check/governance','c4','btn4');
+  if(n===5)runCheck('/api/check/network'+(offline?'?offline=true':''),'c5','btn5');
+  if(n===6)runCheck('/api/check/audit','c6','btn6');
+  if(n===7)showSummary();
+}
+
+function updateProgress(){
+  let h='';for(let i=0;i<STEPS;i++)h+=`<div class="dot ${i<cur?'done':i===cur?'active':''}"></div>`;
+  document.getElementById('progressBar').innerHTML=h;
+}
+
+/* ===== Mode selection ===== */
+function selMode(el){
+  document.querySelectorAll('.sopt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+  selModeVal=el.dataset.mode;
+  document.getElementById('btnStart').disabled=false;
+  localStorage.setItem('hz_mode',selModeVal);
+}
+
+/* ===== API calls ===== */
+async function getCSRF(){
+  if(csrf)return csrf;
+  const r=await fetch('/api/csrf');
+  const d=await r.json();
+  csrf=d.token;
+  return csrf;
+}
+
+async function runCheck(url,containerId,btnId){
+  const c=document.getElementById(containerId);
+  c.innerHTML='<div class="loading-msg"><span class="spinner"></span> <span data-i="checking">'+(I[lang].checking)+'</span></div>';
+  if(btnId)document.getElementById(btnId).disabled=true;
+  try{
+    const r=await fetch(url);
+    const d=await r.json();
+    const items=d.checks||[];
+    renderChecks(c,items);
+    const hasFail=items.some(i=>i.status==='fail');
+    if(btnId)document.getElementById(btnId).disabled=false;
+  }catch(e){
+    c.innerHTML=`<div class="chk fail"><span class="dot"></span><span class="label">Error</span><span class="detail">${e.message}</span></div>`;
+  }
+}
+
+function renderChecks(container,items){
+  let h='';
+  for(const i of items){
+    h+=`<div class="chk ${i.status}"><span class="dot"></span><span class="label">${esc(i.label)}</span><span class="detail">${esc(i.detail)}</span>`;
+    if(i.fix)h+=`<a href="${esc(i.fix)}" target="_blank" class="btn btn-ghost btn-sm fix" style="font-size:.75rem">Fix</a>`;
+    h+=`</div>`;
+  }
+  container.innerHTML=h;
+}
+
+/* ===== Credentials ===== */
+async function loadCredFields(){
+  const r=await fetch('/api/info');
+  const info=await r.json();
+  const creds=info.credentials||[];
+  const cont=document.getElementById('credFields');
+  let h='';
+  for(const name of creds){
+    const req=name!=='VOICE_TOOLS_OPENAI_KEY';
+    h+=`<div class="field"><label>${esc(name)} ${req?'<span style="color:var(--fail)">*</span>':''}</label>`;
+    h+=`<div class="inp-wrap"><input type="password" id="cred_${name}" placeholder="Enter key…" autocomplete="off">`;
+    h+=`<button class="toggle-pw" type="button" onclick="togglePw('cred_${name}',this)">👁️</button></div>`;
+    h+=`<div class="hint">${req?'Required':'Optional'}</div></div>`;
+  }
+  cont.innerHTML=h;
+}
+
+function togglePw(id,btn){const i=document.getElementById(id);i.type=i.type==='password'?'text':'password';}
+
+async function saveCreds(){
+  const token=await getCSRF();
+  const inputs=document.querySelectorAll('[id^="cred_"]');
+  const credentials={};
+  inputs.forEach(i=>{const n=i.id.replace('cred_','');if(i.value.trim())credentials[n]=i.value.trim();});
+  const r=await fetch('/api/save/credentials',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({csrf:token,credentials})});
+  const d=await r.json();
+  const st=document.getElementById('credStatus');
+  if(d.ok)st.innerHTML=`<div class="chk pass"><span class="dot"></span><span class="label">Saved</span><span class="detail">${esc(d.path)}</span></div>`;
+  else st.innerHTML=`<div class="chk fail"><span class="dot"></span><span class="label">Error</span><span class="detail">${esc(d.error)}</span></div>`;
+}
+
+/* ===== Summary ===== */
+async function showSummary(){
+  try{
+    const r=await fetch('/api/check/all'+(offline?'?offline=true':''));
+    fullReport=await r.json();
+    const s=fullReport.summary;
+    document.getElementById('summaryGrid').innerHTML=`
+      <div class="stat s-pass"><div class="num">${s.pass}</div><div class="lbl">${I[lang].passCount}</div></div>
+      <div class="stat s-warn"><div class="num">${s.warn}</div><div class="lbl">${I[lang].warnCount}</div></div>
+      <div class="stat s-fail"><div class="num">${s.fail}</div><div class="lbl">${I[lang].failCount}</div></div>`;
+    const v=document.getElementById('summaryVerdict');
+    if(s.ready){v.textContent=I[lang].verdictPass;v.style.color='var(--success)';}
+    else{v.textContent=I[lang].verdictFail;v.style.color='var(--fail)';}
+  }catch(e){
+    document.getElementById('summaryVerdict').textContent='Error: '+e.message;
+  }
+}
+
+function downloadJSON(){
+  if(!fullReport)return;
+  const blob=new Blob([JSON.stringify(fullReport,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='hermes-readiness-report.json';a.click();
+}
+
+function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+/* ===== Init ===== */
+window.addEventListener('DOMContentLoaded',()=>{
+  const sl=localStorage.getItem('hz_lang');
+  if(sl==='ar')toggleLang();
+  document.getElementById('offlineMode').addEventListener('change',e=>{offline=e.target.checked;});
+  updateProgress();
+  getCSRF();
+  // Resume
+  const savedStep=parseInt(localStorage.getItem('hz_step')||'0');
+  const savedMode=localStorage.getItem('hz_mode');
+  if(savedMode){
+    const opt=document.querySelector(`[data-mode="${savedMode}"]`);
+    if(opt)selMode(opt);
+  }
+  if(savedStep>0&&selModeVal)goStep(savedStep);
+});
+</script>
+</body>
+</html>

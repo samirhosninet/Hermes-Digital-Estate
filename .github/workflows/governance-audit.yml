@@ -40,5 +40,8 @@ jobs:
             tests.scripts.test_terminal_hook_contract \
             -v
 
+      - name: Run preflight tests
+        run: python -m unittest tests.scripts.test_preflight -v
+
       - name: Run portability scanner
-        run: python scripts/governance/check_portability.py docs specs scripts tests agent skills SOUL.md config.yaml distribution.yaml
+        run: python scripts/governance/check_portability.py docs specs scripts tests agent skills SOUL.md config.yaml distribution.yaml wizard.py preflight START.bat START.sh

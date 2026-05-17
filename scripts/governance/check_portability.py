@@ -18,6 +18,7 @@ TEXT_EXTENSIONS = {".md", ".json", ".yaml", ".yml", ".py", ".txt"}
 SKIP_FILE_NAMES = {
     "check_portability.py",  # contains the forbidden regex patterns by definition
     "test_governance_portability.py",  # contains intentionally forbidden fixture strings
+    "test_preflight.py",  # preflight tests contain fixture patterns
 }
 
 

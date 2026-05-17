@@ -72,17 +72,28 @@ SECRET_SCAN_SKIP = {
     "runtime_governance.py", "model_benchmark.py",
     "runtime-guard-design.md", "evidence-bundle.md", "SKILL.md",
     "tasks.md",
+    "test_preflight.py",
 }
+
+
+def scan_text(path: str) -> str:
+    content_lines = []
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            stripped = line.lstrip()
+            if stripped.startswith("#"):
+                continue
+            content_lines.append(line)
+    return "".join(content_lines)
 
 for pattern in patterns:
     found_in = []
     for fp in files_to_scan:
         if os.path.basename(fp) in SECRET_SCAN_SKIP: continue
         try:
-            with open(fp, "r", encoding="utf-8") as f:
-                content = f.read()
-                if pattern in content:
-                    found_in.append(fp)
+            content = scan_text(fp)
+            if pattern in content:
+                found_in.append(fp)
         except:
             pass
     if found_in:

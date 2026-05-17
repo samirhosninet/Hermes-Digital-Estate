@@ -94,6 +94,22 @@ class TestDigitalStateDistribution(unittest.TestCase):
         self.assertEqual(contract["digital_state_update_policy"]["primary_update_command"], "hermes profile update digital-state")
         self.assertIn("Hermes core runtime modifications", contract["forbidden_update_contents"])
 
+    def test_setup_wizard_files_are_declared_distribution_artifacts(self):
+        root = Path(__file__).resolve().parents[2]
+        manifest = json.loads((root / "digital-state.manifest.json").read_text(encoding="utf-8"))
+        distribution = bootstrap._simple_yaml_load(root / "distribution.yaml")
+        required = set(manifest["required_files"])
+        allowed = set(manifest["allowed_roots"])
+        owned = set(distribution["distribution_owned"])
+
+        for path in ("START.bat", "START.sh", "wizard.py", "preflight/"):
+            self.assertIn(path, allowed)
+            self.assertIn(path, owned)
+        self.assertIn("preflight/server.py", required)
+        self.assertIn("preflight/checks.py", required)
+        self.assertIn("preflight/static/index.html", required)
+        self.assertIn("specs/004-setup-wizard-hardening/spec.md", required)
+
     def _valid_manifest(self):
         return {
             "schema_version": "digital-state-manifest-v1",

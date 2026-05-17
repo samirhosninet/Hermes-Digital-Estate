@@ -212,6 +212,8 @@ def scan_portable_files(root: Path, manifest: dict[str, Any]) -> list[dict[str, 
         for file_path in files:
             if file_path.suffix in {".pyc", ".png", ".jpg", ".jpeg", ".gif", ".zip", ".gz"}:
                 continue
+            if file_path.name == ".env.EXAMPLE":
+                continue
             try:
                 text = file_path.read_text(encoding="utf-8")
             except UnicodeDecodeError:

@@ -13,7 +13,20 @@ Digital State is a **profile distribution** that installs **on top of** official
 - **Model ministry routing** — fixed provider/model assignments per ministry
 - **Scripts** — bootstrap, portability checks, benchmarking
 
-## Quick Install
+## Setup Wizard (Recommended — One Click)
+
+**Windows:** Double-click `START.bat`
+**macOS / Linux:** Double-click `START.sh` (or run `bash START.sh`)
+
+That's it. The wizard opens automatically in your browser, starting at `http://127.0.0.1:8484` or the next available local port, with a 7-step guided readiness check. No technical knowledge required.
+
+Alternatively, run directly:
+```bash
+python wizard.py
+python wizard.py --no-browser  # diagnostic mode
+```
+
+## Quick Install (Advanced)
 
 ```bash
 # 1. Clone official Hermes Agent

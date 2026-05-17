@@ -14,10 +14,15 @@
     "SOUL.md",
     "config.yaml",
     ".env.EXAMPLE",
+    "START.bat",
+    "START.sh",
+    "wizard.py",
     "digital-state.manifest.json",
+    "preflight/",
     "docs/governance/",
     "skills/devops/governance-status/",
     "specs/003-portable-digital-state-distribution/",
+    "specs/004-setup-wizard-hardening/",
     "scripts/governance/"
   ],
   "forbidden_paths": [
@@ -35,7 +40,14 @@
     "SOUL.md",
     "config.yaml",
     ".env.EXAMPLE",
+    "START.bat",
+    "START.sh",
+    "wizard.py",
     "digital-state.manifest.json",
+    "preflight/__init__.py",
+    "preflight/checks.py",
+    "preflight/server.py",
+    "preflight/static/index.html",
     "docs/governance/start-here.md",
     "docs/governance/user-quickstart.md",
     "docs/governance/portable-digital-state.md",
@@ -51,11 +63,13 @@
     "docs/governance/model-ministry-routing.md",
     "specs/003-portable-digital-state-distribution/schemas/model-ministry-routing-v1.json",
     "specs/003-portable-digital-state-distribution/fixtures/model-ministry-routing.json",
-    "specs/003-portable-digital-state-distribution/model-ministry-readiness.md"
+    "specs/003-portable-digital-state-distribution/model-ministry-readiness.md",
+    "specs/004-setup-wizard-hardening/spec.md"
   ],
   "required_checks": [
     "python3 scripts/governance/bootstrap_digital_state.py --json",
-    "python3 scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution scripts/governance",
+    "python3 -m unittest tests.scripts.test_preflight",
+    "python3 scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening scripts/governance wizard.py preflight START.bat START.sh",
     "hermes config check"
   ],
   "supported_modes": [
