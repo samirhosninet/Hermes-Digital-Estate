@@ -20,13 +20,14 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Run deep audit (141 checks)
+      - name: Run deep audit
         run: python audit.py
 
-      - name: Run governance tests (60 tests)
+      - name: Run governance tests
         run: |
           python -m unittest \
             tests.scripts.test_digital_state_distribution \
+            tests.scripts.test_staging_distribution \
             tests.scripts.test_governance_portability \
             tests.scripts.test_governance_status \
             tests.agent.test_runtime_governance \
@@ -43,5 +44,16 @@ jobs:
       - name: Run preflight tests
         run: python -m unittest tests.scripts.test_preflight -v
 
-      - name: Run portability scanner
+      - name: Run workspace portability scanner
         run: python scripts/governance/check_portability.py docs specs scripts tests agent skills SOUL.md config.yaml distribution.yaml wizard.py preflight START.bat START.sh
+
+      - name: Build staging distribution
+        run: python scripts/governance/build_staging_distribution.py --output "$RUNNER_TEMP/digital-state-staging" --json
+
+      - name: Run staging bootstrap
+        working-directory: ${{ runner.temp }}/digital-state-staging
+        run: python scripts/governance/bootstrap_digital_state.py --json
+
+      - name: Run staging portability scanner
+        working-directory: ${{ runner.temp }}/digital-state-staging
+        run: python scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening scripts/governance wizard.py preflight START.bat START.sh

@@ -40,11 +40,16 @@ Work only on distribution-owned or governance-owned files:
 - `SOUL.md`
 - `config.yaml`
 - `.env.EXAMPLE`
+- `START.bat`
+- `START.sh`
+- `wizard.py`
 - `digital-state.manifest.json`
+- `preflight/`
 - `docs/governance/`
 - `skills/devops/governance-status/`
 - `scripts/governance/`
 - `specs/003-portable-digital-state-distribution/`
+- `specs/004-setup-wizard-hardening/`
 - relevant distribution tests
 
 Do not modify Hermes core runtime for Feature 003:
@@ -63,9 +68,9 @@ Do not modify Hermes core runtime for Feature 003:
 Run from the workspace root:
 
 ```bash
-python3 -m unittest tests.scripts.test_digital_state_distribution tests.scripts.test_model_ministry_routing -v
+python3 -m unittest tests.scripts.test_staging_distribution tests.scripts.test_digital_state_distribution tests.scripts.test_preflight tests.scripts.test_model_ministry_routing -v
 python3 scripts/governance/bootstrap_digital_state.py --json
-python3 scripts/governance/check_portability.py distribution.yaml SOUL.md config.yaml .env.EXAMPLE digital-state.manifest.json docs/governance skills/devops/governance-status scripts/governance specs/003-portable-digital-state-distribution tests/scripts/test_digital_state_distribution.py tests/scripts/test_model_ministry_routing.py
+python3 scripts/governance/check_portability.py distribution.yaml SOUL.md config.yaml .env.EXAMPLE digital-state.manifest.json docs/governance skills/devops/governance-status scripts/governance specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening wizard.py preflight START.bat START.sh tests/scripts tests/fixtures
 hermes config check
 ```
 
@@ -80,19 +85,38 @@ Required outcome:
 
 Create a clean staging directory from the manifest-approved files only. The staging directory should look like the future GitHub repo, not like the full Hermes Agent checkout.
 
+Build it with the repository staging builder:
+
+```bash
+python3 scripts/governance/build_staging_distribution.py --output /path/to/empty-staging-dir --json
+```
+
 Minimum staging contents:
 
 - `distribution.yaml`
 - `SOUL.md`
 - `config.yaml`
 - `.env.EXAMPLE`
+- `START.bat`
+- `START.sh`
+- `wizard.py`
 - `digital-state.manifest.json`
+- `preflight/`
 - `docs/governance/`
+- `docs/governance/digital-state-runbook-ar.md`
 - `skills/devops/governance-status/`
 - `scripts/governance/`
 - `specs/003-portable-digital-state-distribution/`
-- `tests/` entries needed for distribution validation
-- `README.md` when created
+- `specs/004-setup-wizard-hardening/`
+
+`tests/` and `agent/` are validation-only workspace inputs. They are not part of the GitHub distribution product unless the manifest explicitly allows them.
+
+Run the distribution checks again from inside the staging directory:
+
+```bash
+python3 scripts/governance/bootstrap_digital_state.py --json
+python3 scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening scripts/governance wizard.py preflight START.bat START.sh
+```
 
 Do not include:
 
@@ -103,6 +127,8 @@ Do not include:
 - memories
 - local profile exports
 - machine-specific paths
+- `agent/`
+- `tests/`
 - the full Hermes Agent source tree
 
 ### Stage 3: install staging as a temporary profile
@@ -168,7 +194,7 @@ Create a separate GitHub repo for the distribution, for example:
 gh repo create YOUR-ORG/hermes-digital-state --public --description "Portable Digital State profile distribution for Hermes Agent"
 ```
 
-Push only the staging distribution contents, not the full Hermes Agent workspace.
+Push only the staging distribution contents, not the full Hermes Agent workspace. The staging output is the only allowed source for the GitHub distribution repo.
 
 Tag the first tested version:
 
@@ -234,9 +260,10 @@ Example policy:
 Before release, the GitHub repo should run these checks on pull requests and tags:
 
 ```bash
-python3 -m unittest tests.scripts.test_digital_state_distribution tests.scripts.test_model_ministry_routing -v
+python3 -m unittest tests.scripts.test_staging_distribution tests.scripts.test_digital_state_distribution tests.scripts.test_preflight tests.scripts.test_model_ministry_routing -v
 python3 scripts/governance/bootstrap_digital_state.py --json
-python3 scripts/governance/check_portability.py distribution.yaml SOUL.md config.yaml .env.EXAMPLE digital-state.manifest.json docs/governance skills/devops/governance-status scripts/governance specs/003-portable-digital-state-distribution tests/scripts/test_digital_state_distribution.py tests/scripts/test_model_ministry_routing.py
+python3 scripts/governance/build_staging_distribution.py --output /path/to/empty-staging-dir --json
+python3 scripts/governance/check_portability.py distribution.yaml SOUL.md config.yaml .env.EXAMPLE digital-state.manifest.json docs/governance skills/devops/governance-status scripts/governance specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening wizard.py preflight START.bat START.sh tests/scripts tests/fixtures
 ```
 
 CI must fail if:

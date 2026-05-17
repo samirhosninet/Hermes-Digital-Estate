@@ -115,6 +115,26 @@ class TestDigitalStateDistribution(unittest.TestCase):
         self.assertIn("scripts/governance/build_staging_distribution.py", required)
         self.assertIn("specs/004-setup-wizard-hardening/spec.md", required)
 
+    def test_pre_github_release_gate_docs_and_ci_require_staging(self):
+        root = Path(__file__).resolve().parents[2]
+        e2e = (root / "docs/governance/e2e-fullstack-release.md").read_text(encoding="utf-8")
+        maintenance = (root / "docs/governance/github-distribution-maintenance.md").read_text(encoding="utf-8")
+        workflow = (root / ".github/workflows/governance-audit.yml").read_text(encoding="utf-8")
+
+        for text in (e2e, maintenance):
+            self.assertIn("scripts/governance/build_staging_distribution.py", text)
+            self.assertIn("docs/governance/digital-state-runbook-ar.md", text)
+            self.assertIn("START.bat", text)
+            self.assertIn("START.sh", text)
+            self.assertIn("wizard.py", text)
+            self.assertIn("preflight/", text)
+            self.assertIn("specs/004-setup-wizard-hardening/", text)
+
+        self.assertIn("tests.scripts.test_staging_distribution", workflow)
+        self.assertIn("Build staging distribution", workflow)
+        self.assertIn("Run staging bootstrap", workflow)
+        self.assertIn("Run staging portability scanner", workflow)
+
     def _valid_manifest(self):
         return {
             "schema_version": "digital-state-manifest-v1",
