@@ -11,6 +11,8 @@ import json
 import os
 import platform
 import secrets
+import shutil
+import subprocess
 import sys
 import tempfile
 import threading
@@ -24,6 +26,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 HOST = "127.0.0.1"
 PORT_SEARCH_LIMIT = 50
 ALLOWED_HOSTS = {"127.0.0.1", "localhost"}
+LAUNCH_COMMAND = ["hermes", "-p", "digital-state", "chat"]
 
 # CSRF token — generated per server session
 CSRF_TOKEN = secrets.token_hex(32)
@@ -118,6 +121,8 @@ class WizardHandler(SimpleHTTPRequestHandler):
 
         if path == "/api/save/credentials":
             return self._save_credentials()
+        if path == "/api/launch":
+            return self._launch_digital_state()
         self.send_error(404)
 
     def _host_allowed(self) -> bool:
@@ -151,6 +156,26 @@ class WizardHandler(SimpleHTTPRequestHandler):
         except Exception as e:
             return self._json({"error": str(e)}, 500)
 
+    def _read_json_body(self, max_bytes: int = 1024) -> tuple[dict[str, Any] | None, tuple[dict[str, str], int] | None]:
+        content_len = int(self.headers.get("Content-Length", 0))
+        if content_len > max_bytes:
+            self.rfile.read(min(content_len, max_bytes + 1))
+            return None, ({"error": "payload too large"}, 413)
+        body = self.rfile.read(content_len)
+        if not body:
+            return {}, None
+        try:
+            data = json.loads(body)
+        except Exception:
+            return None, ({"error": "invalid JSON"}, 400)
+        if not isinstance(data, dict):
+            return None, ({"error": "invalid JSON"}, 400)
+        return data, None
+
+    def _verify_csrf(self, data: dict[str, Any]) -> bool:
+        token = str(data.get("csrf", ""))
+        return secrets.compare_digest(token, CSRF_TOKEN)
+
     # ---------- Info ----------
     def _info(self) -> dict:
         manifest_path = REPO_ROOT / "digital-state.manifest.json"
@@ -171,19 +196,13 @@ class WizardHandler(SimpleHTTPRequestHandler):
 
     # ---------- Save credentials ----------
     def _save_credentials(self):
-        # CSRF check
-        content_len = int(self.headers.get("Content-Length", 0))
-        if content_len > 4096:
-            self.rfile.read(min(content_len, 8192))
-            return self._json({"error": "payload too large"}, 413)
-        body = self.rfile.read(content_len)
-        try:
-            data = json.loads(body)
-        except Exception:
-            return self._json({"error": "invalid JSON"}, 400)
+        data, error = self._read_json_body(max_bytes=4096)
+        if error:
+            body, status = error
+            return self._json(body, status)
+        assert data is not None
 
-        token = data.get("csrf", "")
-        if not secrets.compare_digest(token, CSRF_TOKEN):
+        if not self._verify_csrf(data):
             return self._json({"error": "invalid CSRF token"}, 403)
 
         credentials = data.get("credentials", {})
@@ -239,6 +258,21 @@ class WizardHandler(SimpleHTTPRequestHandler):
 
         return self._json({"ok": True})
 
+    # ---------- Launch Hermes ----------
+    def _launch_digital_state(self):
+        data, error = self._read_json_body(max_bytes=1024)
+        if error:
+            body, status = error
+            return self._json(body, status)
+        assert data is not None
+
+        if not self._verify_csrf(data):
+            return self._json({"error": "invalid CSRF token"}, 403)
+
+        result = _launch_terminal()
+        status = 200 if result["ok"] else 503
+        return self._json(result, status)
+
     # ---------- JSON response helper ----------
     def _json(self, data: Any, status: int = 200):
         body = json.dumps(data, ensure_ascii=False, indent=2).encode("utf-8")
@@ -262,6 +296,53 @@ def _bind_server(preferred_port: int, attempts: int = PORT_SEARCH_LIMIT) -> tupl
     raise RuntimeError(
         f"no available localhost port in range {preferred_port}-{min(65535, preferred_port + attempts - 1)}{detail}"
     )
+
+
+def _launch_terminal() -> dict[str, Any]:
+    command_text = " ".join(LAUNCH_COMMAND)
+    system = platform.system().lower()
+    try:
+        if system == "windows":
+            creationflags = getattr(subprocess, "CREATE_NEW_CONSOLE", 0)
+            subprocess.Popen(
+                ["cmd.exe", "/k", *LAUNCH_COMMAND],
+                cwd=str(REPO_ROOT),
+                creationflags=creationflags,
+            )
+            return {"ok": True, "command": command_text}
+
+        if system == "darwin":
+            if not shutil.which("osascript"):
+                return _launch_error(command_text, "terminal launcher unavailable")
+            script = (
+                'tell application "Terminal" to do script '
+                + json.dumps(f"cd {str(REPO_ROOT)!r} && {command_text}")
+            )
+            subprocess.Popen(["osascript", "-e", script], cwd=str(REPO_ROOT))
+            return {"ok": True, "command": command_text}
+
+        terminals = [
+            ["x-terminal-emulator", "-e", *LAUNCH_COMMAND],
+            ["gnome-terminal", "--", *LAUNCH_COMMAND],
+            ["konsole", "-e", *LAUNCH_COMMAND],
+            ["xfce4-terminal", "-e", command_text],
+        ]
+        for terminal in terminals:
+            if shutil.which(terminal[0]):
+                subprocess.Popen(terminal, cwd=str(REPO_ROOT))
+                return {"ok": True, "command": command_text}
+        return _launch_error(command_text, "terminal launcher unavailable")
+    except Exception:
+        return _launch_error(command_text, "launch failed")
+
+
+def _launch_error(command_text: str, reason: str) -> dict[str, Any]:
+    return {
+        "ok": False,
+        "error": reason,
+        "command": command_text,
+        "message": "Open a terminal and run the command manually.",
+    }
 
 
 def start(port: int = 8484, open_browser: bool = True):

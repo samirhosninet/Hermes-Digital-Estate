@@ -10,6 +10,7 @@ import threading
 import unittest
 from http.client import HTTPConnection
 from pathlib import Path
+from unittest import mock
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT))
@@ -251,6 +252,76 @@ class WizardServerHardeningTests(unittest.TestCase):
                 httpd.shutdown()
                 httpd.server_close()
                 wizard_server.REPO_ROOT = old_root
+
+    def test_launch_rejects_bad_csrf(self):
+        httpd, port = self._start_server()
+        try:
+            bad = json.dumps({"csrf": "bad"}).encode("utf-8")
+            status, _ = self._request(port, "POST", "/api/launch", bad, {"Content-Type": "application/json"})
+            self.assertEqual(status, 403)
+        finally:
+            httpd.shutdown()
+            httpd.server_close()
+
+    def test_launch_rejects_non_local_host(self):
+        httpd, port = self._start_server()
+        try:
+            body = json.dumps({"csrf": wizard_server.CSRF_TOKEN}).encode("utf-8")
+            status, _ = self._request(
+                port,
+                "POST",
+                "/api/launch",
+                body,
+                {"Content-Type": "application/json", "Host": "example.com"},
+            )
+            self.assertEqual(status, 403)
+        finally:
+            httpd.shutdown()
+            httpd.server_close()
+
+    def test_launch_endpoint_ignores_client_command(self):
+        httpd, port = self._start_server()
+        try:
+            with mock.patch.object(wizard_server, "_launch_terminal", return_value={"ok": True, "command": "hermes -p digital-state chat"}) as launch:
+                body = json.dumps({
+                    "csrf": wizard_server.CSRF_TOKEN,
+                    "command": "calc.exe",
+                }).encode("utf-8")
+                status, data = self._request(port, "POST", "/api/launch", body, {"Content-Type": "application/json"})
+            self.assertEqual(status, 200)
+            launch.assert_called_once_with()
+            response = json.loads(data)
+            self.assertEqual(response["command"], "hermes -p digital-state chat")
+            self.assertNotIn("calc", data.decode("utf-8"))
+        finally:
+            httpd.shutdown()
+            httpd.server_close()
+
+    def test_launch_terminal_uses_fixed_windows_command_without_shell(self):
+        with mock.patch.object(wizard_server.platform, "system", return_value="Windows"), \
+             mock.patch.object(wizard_server.subprocess, "Popen") as popen:
+            result = wizard_server._launch_terminal()
+        self.assertTrue(result["ok"])
+        args, kwargs = popen.call_args
+        self.assertEqual(args[0], ["cmd.exe", "/k", "hermes", "-p", "digital-state", "chat"])
+        self.assertNotIn("shell", kwargs)
+
+    def test_launch_terminal_reports_clear_fallback_when_no_terminal(self):
+        with mock.patch.object(wizard_server.platform, "system", return_value="Linux"), \
+             mock.patch.object(wizard_server.shutil, "which", return_value=None), \
+             mock.patch.object(wizard_server.subprocess, "Popen") as popen:
+            result = wizard_server._launch_terminal()
+        self.assertFalse(result["ok"])
+        self.assertEqual(result["command"], "hermes -p digital-state chat")
+        self.assertIn("message", result)
+        popen.assert_not_called()
+
+    def test_wizard_ui_contains_launch_button_and_fallback_command(self):
+        html = (REPO_ROOT / "preflight/static/index.html").read_text("utf-8")
+        self.assertIn("/api/launch", html)
+        self.assertIn("Launch Digital State", html)
+        self.assertIn("hermes -p digital-state chat", html)
+        self.assertIn("launchFailed", html)
 
 
 if __name__ == "__main__":

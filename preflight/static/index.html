@@ -55,6 +55,13 @@ header p{color:var(--text2);margin-top:8px;font-size:.95rem}
 html[dir=rtl] .chk .detail{text-align:left}
 .chk .fix{margin-left:8px}
 html[dir=rtl] .chk .fix{margin-left:0;margin-right:8px}
+.issue-list{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.issue{padding:14px 16px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid var(--card-border)}
+.issue.fail{border-color:rgba(239,68,68,.25)}.issue.warn{border-color:rgba(245,158,11,.25)}
+.issue .ititle{font-weight:600;margin-bottom:6px}.issue .ibody{color:var(--text2);font-size:.88rem;line-height:1.5}
+.copy-cmd{display:inline-flex;align-items:center;margin-top:8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82rem;padding:8px 10px;border-radius:8px;background:rgba(0,0,0,.25);border:1px solid var(--card-border);color:var(--text);cursor:pointer}
+.launch-panel{text-align:center;margin-top:18px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.launch-status{color:var(--text2);font-size:.9rem;min-height:1.3em}
 
 /* Select grid */
 .sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
@@ -182,8 +189,11 @@ html[dir=rtl] .lang-toggle{right:auto;left:16px}
 <h2><span class="icon">🎉</span> <span data-i="ready">Readiness Report</span></h2>
 <div class="summary-grid" id="summaryGrid"></div>
 <div id="summaryVerdict" style="text-align:center;padding:20px;font-size:1.1rem;font-weight:600"></div>
-<div style="text-align:center;margin-top:16px">
-<code style="background:var(--card);padding:12px 24px;border-radius:10px;border:1px solid var(--card-border);display:inline-block;font-size:1rem">hermes -p digital-state chat</code>
+<div id="issueList" class="issue-list"></div>
+<div class="launch-panel">
+<button class="btn btn-primary" id="launchBtn" onclick="launchDigitalState()" data-i="launchDigitalState">Launch Digital State</button>
+<div class="launch-status" id="launchStatus" data-i="launchHint">Opens Hermes chat in a new terminal. If it fails, run the command below.</div>
+<code class="copy-cmd" onclick="copyLaunchCommand()" title="Copy command">hermes -p digital-state chat</code>
 </div>
 </div>
 <div class="actions">
@@ -199,8 +209,8 @@ html[dir=rtl] .lang-toggle{right:auto;left:16px}
 <script>
 /* ===== i18n ===== */
 const I={
-en:{welcome:"Welcome",welcomeDesc:"Choose your language and user type to begin.",userType:"User Type",mPersonal:"Individual",mTeam:"Team",mEnterprise:"Organization",mGov:"Government",mSpace:"Space Agency",offlineLabel:"Offline / Air-Gapped Mode",begin:"Begin →",sysCheck:"System Check",hermesCheck:"Hermes Agent",creds:"Credentials",credsDesc:"Enter your API keys. They are saved locally only.",saveCreds:"💾 Save Credentials",govCheck:"Governance Profile",netCheck:"Network & Services",auditCheck:"Deep Audit",auditDesc:"Running 141-point audit, 60 tests, and portability scan…",ready:"Readiness Report",back:"← Back",next:"Next →",checking:"Checking…",running:"Running (this may take a minute)…",dlJSON:"📥 JSON Report",dlPrint:"🖨️ Print",passCount:"PASS",warnCount:"WARN",failCount:"FAIL",verdictPass:"✅ DISTRIBUTION IS READY",verdictFail:"❌ ISSUES FOUND — review above"},
-ar:{welcome:"مرحباً",welcomeDesc:"اختر اللغة ونوع المستخدم للبدء.",userType:"نوع المستخدم",mPersonal:"فرد",mTeam:"فريق",mEnterprise:"مؤسسة",mGov:"حكومة",mSpace:"وكالة فضاء",offlineLabel:"وضع معزول / بدون إنترنت",begin:"ابدأ ←",sysCheck:"فحص النظام",hermesCheck:"وكيل هيرميس",creds:"المفاتيح",credsDesc:"أدخل مفاتيح API. تُحفظ محلياً فقط.",saveCreds:"💾 حفظ المفاتيح",govCheck:"ملف الحوكمة",netCheck:"الشبكة والخدمات",auditCheck:"الفحص العميق",auditDesc:"تشغيل 141 فحص، 60 اختبار، ومسح التوافقية…",ready:"تقرير الجاهزية",back:"العودة →",next:"← التالي",checking:"جارٍ الفحص…",running:"جارٍ التشغيل (قد يستغرق دقيقة)…",dlJSON:"📥 تقرير JSON",dlPrint:"🖨️ طباعة",passCount:"نجح",warnCount:"تحذير",failCount:"فشل",verdictPass:"✅ التوزيع جاهز للإصدار",verdictFail:"❌ توجد مشاكل — راجع أعلاه"}
+en:{welcome:"Welcome",welcomeDesc:"Choose your language and user type to begin.",userType:"User Type",mPersonal:"Individual",mTeam:"Team",mEnterprise:"Organization",mGov:"Government",mSpace:"Space Agency",offlineLabel:"Offline / Air-Gapped Mode",begin:"Begin →",sysCheck:"System Check",hermesCheck:"Hermes Agent",creds:"Credentials",credsDesc:"Enter your API keys. They are saved locally only.",saveCreds:"💾 Save Credentials",govCheck:"Governance Profile",netCheck:"Network & Services",auditCheck:"Deep Audit",auditDesc:"Running 141-point audit, 60 tests, and portability scan…",ready:"Readiness Report",back:"← Back",next:"Next →",checking:"Checking…",running:"Running (this may take a minute)…",dlJSON:"📥 JSON Report",dlPrint:"🖨️ Print",passCount:"PASS",warnCount:"WARN",failCount:"FAIL",verdictPass:"✅ DISTRIBUTION IS READY",verdictFail:"❌ ISSUES FOUND — review above",launchDigitalState:"Launch Digital State",launchHint:"Opens Hermes chat in a new terminal. If it fails, run the command below.",launching:"Launching in terminal…",launched:"Terminal launched. You can close this browser tab.",launchFailed:"Could not open a terminal automatically. Run the command below.",issueTitle:"What needs attention",copyCommand:"Copy command"},
+ar:{welcome:"مرحباً",welcomeDesc:"اختر اللغة ونوع المستخدم للبدء.",userType:"نوع المستخدم",mPersonal:"فرد",mTeam:"فريق",mEnterprise:"مؤسسة",mGov:"حكومة",mSpace:"وكالة فضاء",offlineLabel:"وضع معزول / بدون إنترنت",begin:"ابدأ ←",sysCheck:"فحص النظام",hermesCheck:"وكيل هيرميس",creds:"المفاتيح",credsDesc:"أدخل مفاتيح API. تُحفظ محلياً فقط.",saveCreds:"💾 حفظ المفاتيح",govCheck:"ملف الحوكمة",netCheck:"الشبكة والخدمات",auditCheck:"الفحص العميق",auditDesc:"تشغيل 141 فحص، 60 اختبار، ومسح التوافقية…",ready:"تقرير الجاهزية",back:"العودة →",next:"← التالي",checking:"جارٍ الفحص…",running:"جارٍ التشغيل (قد يستغرق دقيقة)…",dlJSON:"📥 تقرير JSON",dlPrint:"🖨️ طباعة",passCount:"نجح",warnCount:"تحذير",failCount:"فشل",verdictPass:"✅ التوزيع جاهز للإصدار",verdictFail:"❌ توجد مشاكل — راجع أعلاه",launchDigitalState:"تشغيل الدولة الرقمية",launchHint:"يفتح Hermes chat في نافذة طرفية جديدة. إذا فشل، شغل الأمر أدناه يدوياً.",launching:"جارٍ الفتح في الطرفية…",launched:"تم فتح الطرفية. يمكنك إغلاق تبويب المتصفح.",launchFailed:"تعذر فتح الطرفية تلقائياً. شغل الأمر أدناه يدوياً.",issueTitle:"ما الذي يحتاج انتباهاً",copyCommand:"نسخ الأمر"}
 };
 let lang='en',csrf='',selModeVal='',offline=false,fullReport=null;
 
@@ -284,6 +294,27 @@ function renderChecks(container,items){
   container.innerHTML=h;
 }
 
+function renderIssues(report){
+  const box=document.getElementById('issueList');
+  if(!box||!report||!report.layers){if(box)box.innerHTML='';return;}
+  const issues=[];
+  for(const layer of report.layers){
+    for(const item of (layer.checks||[])){
+      if(item.status==='fail'||item.status==='warn')issues.push({layer:layer.name,item});
+    }
+  }
+  if(!issues.length){box.innerHTML='';return;}
+  let h=`<div class="issue warn"><div class="ititle">${I[lang].issueTitle}</div><div class="ibody">${issues.length} item(s) need review before production use.</div></div>`;
+  for(const issue of issues.slice(0,8)){
+    const item=issue.item;
+    h+=`<div class="issue ${item.status}"><div class="ititle">${esc(item.label)}</div>`;
+    h+=`<div class="ibody">${esc(item.detail||'Review this check.')}<br>Impact: ${item.status==='fail'?'Required before release readiness.':'Recommended before full use.'}</div>`;
+    if(item.fix)h+=`<button class="copy-cmd" onclick="copyText('${escAttr(item.fix)}')">${esc(item.fix)}</button>`;
+    h+=`</div>`;
+  }
+  box.innerHTML=h;
+}
+
 /* ===== Credentials ===== */
 async function loadCredFields(){
   const r=await fetch('/api/info');
@@ -328,10 +359,32 @@ async function showSummary(){
     const v=document.getElementById('summaryVerdict');
     if(s.ready){v.textContent=I[lang].verdictPass;v.style.color='var(--success)';}
     else{v.textContent=I[lang].verdictFail;v.style.color='var(--fail)';}
+    renderIssues(fullReport);
   }catch(e){
     document.getElementById('summaryVerdict').textContent='Error: '+e.message;
   }
 }
+
+async function launchDigitalState(){
+  const btn=document.getElementById('launchBtn');
+  const st=document.getElementById('launchStatus');
+  btn.disabled=true;
+  st.textContent=I[lang].launching;
+  try{
+    const token=await getCSRF();
+    const r=await fetch('/api/launch',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({csrf:token})});
+    const d=await r.json();
+    if(d.ok){st.textContent=I[lang].launched;return;}
+    st.textContent=(d.message||I[lang].launchFailed)+' Command: '+(d.command||'hermes -p digital-state chat');
+    btn.disabled=false;
+  }catch(e){
+    st.textContent=I[lang].launchFailed+' Command: hermes -p digital-state chat';
+    btn.disabled=false;
+  }
+}
+
+function copyLaunchCommand(){copyText('hermes -p digital-state chat');}
+function copyText(text){navigator.clipboard&&navigator.clipboard.writeText(text);}
 
 function downloadJSON(){
   if(!fullReport)return;
@@ -341,6 +394,7 @@ function downloadJSON(){
 }
 
 function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function escAttr(s){return esc(s).replace(/'/g,'&#39;');}
 
 /* ===== Init ===== */
 window.addEventListener('DOMContentLoaded',()=>{
