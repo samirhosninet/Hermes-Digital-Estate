@@ -9,10 +9,10 @@
 ابدأ بتثبيت Hermes Agent الرسمي من مصدره المعتمد. بعد ذلك ثبت الدولة الرقمية كملف تعريف Profile Distribution:
 
 ```bash
-hermes profile install github.com/YOUR-ORG/hermes-digital-state --alias digital-state
+hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias digital-state
 ```
 
-استبدل `YOUR-ORG` باسم منظمة أو حساب GitHub الحقيقي عند النشر. لا تترك هذا النص كما هو في تعليمات الإنتاج.
+هذا هو مصدر GitHub الرسمي المعتمد للحزمة. لا تستبدله بمسار محلي في تعليمات الإنتاج.
 
 بعد التثبيت:
 

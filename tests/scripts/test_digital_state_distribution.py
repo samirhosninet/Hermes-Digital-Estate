@@ -5,6 +5,9 @@ from pathlib import Path
 
 from scripts.governance import bootstrap_digital_state as bootstrap
 
+CANONICAL_INSTALL_COMMAND = "hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias digital-state"
+CANONICAL_GITHUB_SOURCE = "github.com/samirhosninet/Hermes-Digital-Estate"
+
 
 class TestDigitalStateDistribution(unittest.TestCase):
     def test_current_workspace_distribution_is_valid(self):
@@ -68,7 +71,7 @@ class TestDigitalStateDistribution(unittest.TestCase):
             self.assertIn("hermes -p digital-state chat", text)
         arabic_runbook = (Path(__file__).resolve().parents[2] / "docs/governance/digital-state-runbook-ar.md").read_text(encoding="utf-8")
         self.assertIn("hermes profile install", arabic_runbook)
-        self.assertIn("YOUR-ORG", arabic_runbook)
+        self.assertIn(CANONICAL_GITHUB_SOURCE, arabic_runbook)
 
     def test_update_safety_docs_are_required_distribution_files(self):
         root = Path(__file__).resolve().parents[2]
@@ -135,6 +138,26 @@ class TestDigitalStateDistribution(unittest.TestCase):
         self.assertIn("Run staging bootstrap", workflow)
         self.assertIn("Run staging portability scanner", workflow)
 
+    def test_public_install_commands_use_canonical_github_source(self):
+        root = Path(__file__).resolve().parents[2]
+        manifest = json.loads((root / "digital-state.manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["distribution"]["install_command"], CANONICAL_INSTALL_COMMAND)
+
+        public_docs = (
+            "README.md",
+            "docs/governance/start-here.md",
+            "docs/governance/user-quickstart.md",
+            "docs/governance/digital-state-runbook-ar.md",
+            "docs/governance/update-and-recovery.md",
+            "docs/governance/github-distribution-maintenance.md",
+            "docs/governance/e2e-fullstack-release.md",
+            "specs/003-portable-digital-state-distribution/fixtures/update-safety-contract.json",
+        )
+        for rel_path in public_docs:
+            text = (root / rel_path).read_text(encoding="utf-8")
+            self.assertNotIn("YOUR-ORG", text, rel_path)
+            self.assertIn("samirhosninet/Hermes-Digital-Estate", text, rel_path)
+
     def _valid_manifest(self):
         return {
             "schema_version": "digital-state-manifest-v1",
@@ -142,7 +165,7 @@ class TestDigitalStateDistribution(unittest.TestCase):
             "version": "0.1.0",
             "distribution": {
                 "type": "hermes_profile_distribution",
-                "install_command": "hermes profile install github.com/YOUR-ORG/hermes-digital-state --alias digital-state",
+                "install_command": CANONICAL_INSTALL_COMMAND,
                 "update_command": "hermes profile update digital-state",
                 "run_command": "hermes -p digital-state chat",
             },

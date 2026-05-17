@@ -32,7 +32,7 @@ Arabic operator guide: [docs/governance/digital-state-runbook-ar.md](docs/govern
 
 ```bash
 # 1. Install official Hermes Agent first, then install this profile distribution
-hermes profile install github.com/YOUR-ORG/hermes-digital-state --alias digital-state
+hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias digital-state
 
 # 2. Verify
 hermes profile show digital-state

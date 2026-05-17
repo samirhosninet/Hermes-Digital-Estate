@@ -22,7 +22,7 @@ Do not publish the full `hermes-agent` workspace as the Digital State product. T
 
 3. GitHub distribution repo
    - Purpose: the user-installable product.
-   - Example: `github.com/YOUR-ORG/hermes-digital-state`.
+   - Canonical source: `github.com/samirhosninet/Hermes-Digital-Estate`.
    - Installed with `hermes profile install` and updated with `hermes profile update`.
 
 4. Installed user profile
@@ -188,11 +188,13 @@ Never copy temporary `.env`, auth files, sessions, logs, or memories into the Gi
 
 ### Stage 6: publish to GitHub
 
-Create a separate GitHub repo for the distribution, for example:
+Use the canonical GitHub repo for the distribution:
 
 ```bash
-gh repo create YOUR-ORG/hermes-digital-state --public --description "Portable Digital State profile distribution for Hermes Agent"
+git remote -v
 ```
+
+The remote must point to `https://github.com/samirhosninet/Hermes-Digital-Estate.git`.
 
 Push only the staging distribution contents, not the full Hermes Agent workspace. The staging output is the only allowed source for the GitHub distribution repo.
 
@@ -208,7 +210,7 @@ git push origin main --tags
 Install from GitHub into a fresh profile:
 
 ```bash
-hermes profile install github.com/YOUR-ORG/hermes-digital-state --alias digital-state
+hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias digital-state
 hermes profile show digital-state
 hermes -p digital-state config check
 ```
@@ -283,7 +285,7 @@ The final user experience should be:
 2. Run one install command:
 
 ```bash
-hermes profile install github.com/YOUR-ORG/hermes-digital-state --alias digital-state
+hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias digital-state
 ```
 
 3. Start the profile:

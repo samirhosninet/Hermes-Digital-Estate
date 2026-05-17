@@ -5,7 +5,7 @@
   "description": "Portable Digital State governance profile for official Hermes Agent.",
   "distribution": {
     "type": "hermes_profile_distribution",
-    "install_command": "hermes profile install github.com/YOUR-ORG/hermes-digital-state --alias digital-state",
+    "install_command": "hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias digital-state",
     "update_command": "hermes profile update digital-state",
     "run_command": "hermes -p digital-state chat"
   },

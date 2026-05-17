@@ -38,10 +38,10 @@ hermes config check
 Install the Digital State profile distribution:
 
 ```bash
-hermes profile install github.com/YOUR-ORG/hermes-digital-state --alias digital-state
+hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias digital-state
 ```
 
-The `YOUR-ORG` placeholder must be replaced by the real GitHub organization when the project is published.
+This is the canonical GitHub source for the Digital State profile distribution.
 
 ### 3. Start Digital State
 

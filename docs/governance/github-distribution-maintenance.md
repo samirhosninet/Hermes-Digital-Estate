@@ -7,7 +7,7 @@ Digital State should be maintained as a GitHub-hosted Hermes Profile Distributio
 Recommended repository:
 
 ```text
-github.com/YOUR-ORG/hermes-digital-state
+github.com/samirhosninet/Hermes-Digital-Estate
 ```
 
 The repository contains profile distribution artifacts only. It does not replace official Hermes Agent.
