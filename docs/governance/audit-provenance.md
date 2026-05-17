@@ -85,7 +85,7 @@ Secret hygiene
 Machine portability
 - Use repo-relative paths in portable audit records.
 - Use placeholders for operator-local paths: HERMES_HOME, PROFILE_HOME, ENV_FILE.
-- Do not make D:, /mnt/d, /home/<user>, or ~/.hermes paths required by the repo.
+- Do not make X:, /mnt/d, /mock/user/, or ~/.hermes paths required by the repo.
 
 ## Model Council provenance rules
 

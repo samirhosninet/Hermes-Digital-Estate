@@ -22,11 +22,11 @@ class TestDigitalStateDistribution(unittest.TestCase):
 
     def test_manifest_rejects_absolute_and_windows_paths(self):
         manifest = self._valid_manifest()
-        manifest["allowed_roots"] = ["docs/governance/", "/home/example", "D:/secret"]
+        manifest["allowed_roots"] = ["docs/governance/", "/mock/user/example", "X:/secret"]
         findings = bootstrap.validate_manifest(manifest, root=Path.cwd())
         details = [item["detail"] for item in findings]
-        self.assertTrue(any("/home/example" in detail for detail in details))
-        self.assertTrue(any("D:/secret" in detail for detail in details))
+        self.assertTrue(any("/mock/user/example" in detail for detail in details))
+        self.assertTrue(any("X:/secret" in detail for detail in details))
 
     def test_distribution_rejects_real_env_file_as_owned_path(self):
         manifest = self._valid_manifest()

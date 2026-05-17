@@ -78,7 +78,7 @@ Audit records should store summaries, hashes, policy version, boundary, decision
 
 Future policy artifacts must be repo-relative by default and must not require machine-specific absolute paths. Operator-local overlays may exist outside the repo, but they must be optional, explicitly declared, and excluded from the portable evidence bundle.
 
-A future portability check should fail if the guard policy requires Windows absolute paths, `/home/<user>/...`, `/mnt/<drive>/...`, or untracked secret/config paths to function.
+A future portability check should fail if the guard policy requires Windows absolute paths, `/mock/user/...`, `/mock_mnt/<drive>/...`, or untracked secret/config paths to function.
 
 ## Design-Time Schemas
 

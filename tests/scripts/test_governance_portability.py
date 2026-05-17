@@ -28,7 +28,7 @@ class GovernancePortabilityTests(unittest.TestCase):
     def test_detects_forbidden_absolute_path(self):
         with tempfile.TemporaryDirectory() as tmp:
             sample = Path(tmp) / "bad.md"
-            sample.write_text("required path: D:\\secret\n", encoding="utf-8")
+            sample.write_text("required path: X:\\secret\n", encoding="utf-8")
             result = run_portability(sample)
         self.assertEqual(result.returncode, 1)
         payload = json.loads(result.stdout)
