@@ -1,0 +1,44 @@
+name: Governance Audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  audit:
+    name: Digital State Deep Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run deep audit (141 checks)
+        run: python audit.py
+
+      - name: Run governance tests (60 tests)
+        run: |
+          python -m unittest \
+            tests.scripts.test_digital_state_distribution \
+            tests.scripts.test_governance_portability \
+            tests.scripts.test_governance_status \
+            tests.agent.test_runtime_governance \
+            tests.scripts.test_runtime_guard_schema \
+            tests.scripts.test_model_benchmark \
+            tests.scripts.test_approval_flow_interaction \
+            tests.scripts.test_log_only_implementation_gate \
+            tests.scripts.test_model_ministry_routing \
+            tests.scripts.test_operator_approval_record \
+            tests.scripts.test_runtime_guard_scenarios \
+            tests.scripts.test_terminal_hook_contract \
+            -v
+
+      - name: Run portability scanner
+        run: python scripts/governance/check_portability.py docs specs scripts tests agent skills SOUL.md config.yaml distribution.yaml
