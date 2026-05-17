@@ -20,7 +20,7 @@
   ],
   "rollback": {
     "requires_versioned_github_tags": true,
-    "example_command": "hermes profile install github.com/samirhosninet/Hermes-Digital-Estate@v0.1.0 --alias digital-state"
+    "example_command": "hermes profile install github.com/samirhosninet/Hermes-Digital-Estate@v0.1.1 --alias digital-state"
   },
   "forbidden_update_contents": [
     ".env",

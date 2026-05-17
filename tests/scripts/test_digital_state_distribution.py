@@ -80,16 +80,22 @@ class TestDigitalStateDistribution(unittest.TestCase):
         self.assertIn("docs/governance/update-and-recovery.md", required)
         self.assertIn("docs/governance/github-distribution-maintenance.md", required)
         self.assertIn("docs/governance/e2e-fullstack-release.md", required)
+        self.assertIn("docs/governance/release-notes.md", required)
         update_text = (root / "docs/governance/update-and-recovery.md").read_text(encoding="utf-8")
         maintenance_text = (root / "docs/governance/github-distribution-maintenance.md").read_text(encoding="utf-8")
         e2e_text = (root / "docs/governance/e2e-fullstack-release.md").read_text(encoding="utf-8")
+        release_notes = (root / "docs/governance/release-notes.md").read_text(encoding="utf-8")
         self.assertIn("hermes profile update digital-state", update_text)
+        self.assertIn("v0.1.1", update_text)
         self.assertIn("not a fork", update_text)
         self.assertIn("Hermes core", maintenance_text)
         self.assertIn("CI", maintenance_text)
         self.assertIn("hermes profile install", e2e_text)
         self.assertIn("digital-state-test", e2e_text)
         self.assertIn("GitHub", e2e_text)
+        self.assertIn("v0.1.1", e2e_text)
+        self.assertIn("v0.1.1", release_notes)
+        self.assertIn("staging distribution builder", release_notes)
 
     def test_update_safety_contract_keeps_digital_state_out_of_hermes_core(self):
         root = Path(__file__).resolve().parents[2]
@@ -99,7 +105,18 @@ class TestDigitalStateDistribution(unittest.TestCase):
         self.assertFalse(contract["hermes_core_policy"]["digital_state_may_modify_core"])
         self.assertFalse(contract["hermes_core_policy"]["runtime_changes_allowed_in_feature_003"])
         self.assertEqual(contract["digital_state_update_policy"]["primary_update_command"], "hermes profile update digital-state")
+        self.assertIn("@v0.1.1", contract["rollback"]["example_command"])
         self.assertIn("Hermes core runtime modifications", contract["forbidden_update_contents"])
+
+    def test_release_metadata_is_v011(self):
+        root = Path(__file__).resolve().parents[2]
+        manifest = json.loads((root / "digital-state.manifest.json").read_text(encoding="utf-8"))
+        distribution = bootstrap._simple_yaml_load(root / "distribution.yaml")
+        required = set(manifest["required_files"])
+
+        self.assertEqual(manifest["version"], "0.1.1")
+        self.assertEqual(distribution["version"], "0.1.1")
+        self.assertIn("docs/governance/release-notes.md", required)
 
     def test_setup_wizard_files_are_declared_distribution_artifacts(self):
         root = Path(__file__).resolve().parents[2]
@@ -162,7 +179,7 @@ class TestDigitalStateDistribution(unittest.TestCase):
         return {
             "schema_version": "digital-state-manifest-v1",
             "name": "digital-state",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "distribution": {
                 "type": "hermes_profile_distribution",
                 "install_command": CANONICAL_INSTALL_COMMAND,
@@ -189,7 +206,7 @@ class TestDigitalStateDistribution(unittest.TestCase):
     def _valid_distribution(self):
         return {
             "name": "digital-state",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "description": "Portable Digital State",
             "hermes_requires": ">=0.12.0",
             "env_requires": [

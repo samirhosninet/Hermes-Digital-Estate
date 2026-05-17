@@ -38,7 +38,7 @@ Do not edit Hermes core to work around a failed Digital State update. Instead:
 Example rollback pattern:
 
 ```bash
-hermes profile install github.com/samirhosninet/Hermes-Digital-Estate@v0.1.0 --alias digital-state
+hermes profile install github.com/samirhosninet/Hermes-Digital-Estate@v0.1.1 --alias digital-state
 ```
 
 ## What stays local

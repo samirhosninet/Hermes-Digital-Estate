@@ -4,7 +4,7 @@ import glob
 import subprocess
 
 print("===================================================")
-print("  SPEC KIT DEEP AUDIT - Digital State v0.1.0       ")
+print("  SPEC KIT DEEP AUDIT - Digital State v0.1.1       ")
 print("===================================================")
 print()
 

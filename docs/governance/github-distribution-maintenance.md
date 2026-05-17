@@ -37,7 +37,7 @@ A release must include:
 ## Release process
 
 1. Update the version in `digital-state.manifest.json`.
-2. Update changelog or release notes.
+2. Update `docs/governance/release-notes.md`.
 3. Run validation locally.
 4. Build staging with `scripts/governance/build_staging_distribution.py`.
 5. Run bootstrap and portability inside the staging output.

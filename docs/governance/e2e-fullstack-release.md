@@ -198,10 +198,10 @@ The remote must point to `https://github.com/samirhosninet/Hermes-Digital-Estate
 
 Push only the staging distribution contents, not the full Hermes Agent workspace. The staging output is the only allowed source for the GitHub distribution repo.
 
-Tag the first tested version:
+Tag the current tested version:
 
 ```bash
-git tag v0.1.0
+git tag v0.1.1
 git push origin main --tags
 ```
 
@@ -252,7 +252,7 @@ If a release breaks, reinstall or update from a known-good GitHub tag.
 
 Example policy:
 
-- keep versioned tags such as `v0.1.0`
+- keep versioned tags such as `v0.1.1`
 - publish release notes
 - document compatibility changes
 - never require users to patch Hermes core manually

@@ -1,5 +1,5 @@
 name: digital-state
-version: 0.1.0
+version: 0.1.1
 description: "Portable Digital State governance profile for Hermes Agent"
 hermes_requires: ">=0.12.0"
 author: "Digital State Maintainers"

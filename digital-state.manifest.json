@@ -1,7 +1,7 @@
 {
   "schema_version": "digital-state-manifest-v1",
   "name": "digital-state",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Portable Digital State governance profile for official Hermes Agent.",
   "distribution": {
     "type": "hermes_profile_distribution",
@@ -61,6 +61,7 @@
     "docs/governance/update-and-recovery.md",
     "docs/governance/github-distribution-maintenance.md",
     "docs/governance/e2e-fullstack-release.md",
+    "docs/governance/release-notes.md",
     "specs/003-portable-digital-state-distribution/schemas/update-safety-contract-v1.json",
     "specs/003-portable-digital-state-distribution/fixtures/update-safety-contract.json",
     "docs/governance/model-ministry-routing.md",
