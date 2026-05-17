@@ -2,6 +2,8 @@
 
 This page is for non-technical users. You do not need to understand Git, Python, workspaces, or profiles to start.
 
+Arabic operator guide: [دليل تشغيل الدولة الرقمية](digital-state-runbook-ar.md).
+
 ## What this is
 
 Digital State is an add-on profile for official Hermes Agent.

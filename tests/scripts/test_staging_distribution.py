@@ -23,6 +23,7 @@ class TestStagingDistribution(unittest.TestCase):
                 "wizard.py",
                 "preflight/server.py",
                 "docs/governance/start-here.md",
+                "docs/governance/digital-state-runbook-ar.md",
                 "specs/003-portable-digital-state-distribution/spec.md",
                 "specs/004-setup-wizard-hardening/spec.md",
                 "scripts/governance/bootstrap_digital_state.py",

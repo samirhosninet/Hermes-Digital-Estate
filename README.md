@@ -1,4 +1,4 @@
-# Hermes Digital State 🏛️
+# Hermes Digital State
 
 Portable governance profile for [Hermes Agent](https://github.com/NousResearch/hermes-agent).
 
@@ -26,26 +26,19 @@ python wizard.py
 python wizard.py --no-browser  # diagnostic mode
 ```
 
+Arabic operator guide: [docs/governance/digital-state-runbook-ar.md](docs/governance/digital-state-runbook-ar.md).
+
 ## Quick Install (Advanced)
 
 ```bash
-# 1. Clone official Hermes Agent
-git clone https://github.com/NousResearch/hermes-agent.git
-cd hermes-agent
+# 1. Install official Hermes Agent first, then install this profile distribution
+hermes profile install github.com/YOUR-ORG/hermes-digital-state --alias digital-state
 
-# 2. Clone Digital State overlay
-git clone https://github.com/YOUR-ORG/hermes-digital-state.git /tmp/ds-overlay
-
-# 3. Install overlay (non-destructive copy)
-bash /tmp/ds-overlay/install.sh
-
-# 4. Apply hermes core patches (optional, for NVIDIA provider fixes)
-cd /path/to/hermes-agent
-for p in patches/*.patch; do git apply "$p" 2>/dev/null; done
-
-# 5. Verify
+# 2. Verify
+hermes profile show digital-state
+hermes -p digital-state config check
 python3 scripts/governance/bootstrap_digital_state.py --json
-python3 scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution scripts/governance
+python3 scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening scripts/governance wizard.py preflight START.bat START.sh
 ```
 
 ## Structure
@@ -56,15 +49,14 @@ hermes-digital-state/
 ├── config.yaml                      # Profile defaults (provider, model routing)
 ├── distribution.yaml                # Distribution metadata
 ├── digital-state.manifest.json      # Manifest for portability checks
-├── docs/governance/                 # 24 governance documents
+├── docs/governance/                 # Governance documents and operator runbooks
 ├── scripts/governance/              # Bootstrap, portability, benchmark scripts
 ├── skills/devops/governance-status/ # Governance status skill
 ├── skills/software-development/spec-kit/ # Spec Kit skill
 ├── specs/                           # 3 specifications with model council records
 ├── agent/runtime_governance.py      # Runtime governance module
-├── tests/                           # Tests for governance components
-├── patches/                         # Patches for hermes core modifications
-└── install.sh                       # Non-destructive installer
+├── preflight/                       # Local setup wizard server and checks
+└── tests/                           # Tests for governance components
 ```
 
 ## Compatibility

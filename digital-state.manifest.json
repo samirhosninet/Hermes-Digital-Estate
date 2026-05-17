@@ -51,6 +51,7 @@
     "preflight/static/index.html",
     "docs/governance/start-here.md",
     "docs/governance/user-quickstart.md",
+    "docs/governance/digital-state-runbook-ar.md",
     "docs/governance/portable-digital-state.md",
     "skills/devops/governance-status/SKILL.md",
     "scripts/governance/bootstrap_digital_state.py",

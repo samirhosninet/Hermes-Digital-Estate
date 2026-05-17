@@ -61,10 +61,14 @@ class TestDigitalStateDistribution(unittest.TestCase):
         self.assertIn("scripts/governance/bootstrap_digital_state.py", required)
         self.assertIn("docs/governance/start-here.md", required)
         self.assertIn("docs/governance/user-quickstart.md", required)
+        self.assertIn("docs/governance/digital-state-runbook-ar.md", required)
         for rel_path in ("docs/governance/start-here.md", "docs/governance/user-quickstart.md"):
             text = (Path(__file__).resolve().parents[2] / rel_path).read_text(encoding="utf-8")
             self.assertIn("hermes profile install", text)
             self.assertIn("hermes -p digital-state chat", text)
+        arabic_runbook = (Path(__file__).resolve().parents[2] / "docs/governance/digital-state-runbook-ar.md").read_text(encoding="utf-8")
+        self.assertIn("hermes profile install", arabic_runbook)
+        self.assertIn("YOUR-ORG", arabic_runbook)
 
     def test_update_safety_docs_are_required_distribution_files(self):
         root = Path(__file__).resolve().parents[2]
