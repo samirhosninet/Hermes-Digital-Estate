@@ -108,6 +108,7 @@ class TestDigitalStateDistribution(unittest.TestCase):
         self.assertIn("preflight/server.py", required)
         self.assertIn("preflight/checks.py", required)
         self.assertIn("preflight/static/index.html", required)
+        self.assertIn("scripts/governance/build_staging_distribution.py", required)
         self.assertIn("specs/004-setup-wizard-hardening/spec.md", required)
 
     def _valid_manifest(self):

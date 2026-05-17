@@ -12,6 +12,7 @@
   "compatible_hermes": ">=0.12.0",
   "allowed_roots": [
     "SOUL.md",
+    "distribution.yaml",
     "config.yaml",
     ".env.EXAMPLE",
     "START.bat",
@@ -53,6 +54,7 @@
     "docs/governance/portable-digital-state.md",
     "skills/devops/governance-status/SKILL.md",
     "scripts/governance/bootstrap_digital_state.py",
+    "scripts/governance/build_staging_distribution.py",
     "scripts/governance/check_portability.py",
     "scripts/governance/read_governance_status.py",
     "docs/governance/update-and-recovery.md",
@@ -68,6 +70,7 @@
   ],
   "required_checks": [
     "python3 scripts/governance/bootstrap_digital_state.py --json",
+    "python3 scripts/governance/build_staging_distribution.py --output <outside-repo-empty-dir> --json",
     "python3 -m unittest tests.scripts.test_preflight",
     "python3 scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening scripts/governance wizard.py preflight START.bat START.sh",
     "hermes config check"

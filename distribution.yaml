@@ -18,6 +18,7 @@ env_requires:
     description: "Optional OpenAI-compatible voice/STT/TTS key if voice features are enabled"
     required: false
 distribution_owned:
+  - distribution.yaml
   - SOUL.md
   - config.yaml
   - .env.EXAMPLE
