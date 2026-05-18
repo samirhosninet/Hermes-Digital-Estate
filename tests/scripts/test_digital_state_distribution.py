@@ -5,7 +5,7 @@ from pathlib import Path
 
 from scripts.governance import bootstrap_digital_state as bootstrap
 
-CANONICAL_INSTALL_COMMAND = "hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias digital-state"
+CANONICAL_INSTALL_COMMAND = "hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias"
 CANONICAL_GITHUB_SOURCE = "github.com/samirhosninet/Hermes-Digital-Estate"
 
 
@@ -129,6 +129,11 @@ class TestDigitalStateDistribution(unittest.TestCase):
         for path in ("START.bat", "START.sh", "wizard.py", "preflight/"):
             self.assertIn(path, allowed)
             self.assertIn(path, owned)
+        self.assertIn("scripts/bootstrap/", allowed)
+        self.assertIn("scripts/bootstrap/", owned)
+        self.assertIn("scripts/bootstrap/install-windows.ps1", required)
+        self.assertIn("scripts/bootstrap/windows_bootstrap.ps1", required)
+        self.assertIn("scripts/bootstrap/bootstrap-ui.html", required)
         self.assertIn("preflight/server.py", required)
         self.assertIn("preflight/checks.py", required)
         self.assertIn("preflight/static/index.html", required)

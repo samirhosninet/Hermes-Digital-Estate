@@ -51,13 +51,13 @@ hermes doctor
 Install the profile distribution from GitHub:
 
 ```bash
-hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias digital-state
+hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias
 ```
 
 For local testing before publication, maintainers may use a local path instead:
 
 ```bash
-hermes profile install ./hermes-digital-state --alias digital-state
+hermes profile install ./hermes-digital-state --alias
 ```
 
 ### Step 3: Add local credentials

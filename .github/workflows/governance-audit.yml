@@ -28,6 +28,7 @@ jobs:
           python -m unittest \
             tests.scripts.test_digital_state_distribution \
             tests.scripts.test_staging_distribution \
+            tests.scripts.test_windows_stack_bootstrap \
             tests.scripts.test_governance_portability \
             tests.scripts.test_governance_status \
             tests.agent.test_runtime_governance \
@@ -56,4 +57,4 @@ jobs:
 
       - name: Run staging portability scanner
         working-directory: ${{ runner.temp }}/digital-state-staging
-        run: python scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening scripts/governance wizard.py preflight START.bat START.sh
+        run: python scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening scripts/bootstrap scripts/governance wizard.py preflight START.bat START.sh

@@ -47,6 +47,7 @@ Work only on distribution-owned or governance-owned files:
 - `preflight/`
 - `docs/governance/`
 - `skills/devops/governance-status/`
+- `scripts/bootstrap/`
 - `scripts/governance/`
 - `specs/003-portable-digital-state-distribution/`
 - `specs/004-setup-wizard-hardening/`
@@ -70,7 +71,7 @@ Run from the workspace root:
 ```bash
 python3 -m unittest tests.scripts.test_staging_distribution tests.scripts.test_digital_state_distribution tests.scripts.test_preflight tests.scripts.test_model_ministry_routing -v
 python3 scripts/governance/bootstrap_digital_state.py --json
-python3 scripts/governance/check_portability.py distribution.yaml SOUL.md config.yaml .env.EXAMPLE digital-state.manifest.json docs/governance skills/devops/governance-status scripts/governance specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening wizard.py preflight START.bat START.sh tests/scripts tests/fixtures
+python3 scripts/governance/check_portability.py distribution.yaml SOUL.md config.yaml .env.EXAMPLE digital-state.manifest.json docs/governance skills/devops/governance-status scripts/bootstrap scripts/governance specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening wizard.py preflight START.bat START.sh tests/scripts tests/fixtures
 hermes config check
 ```
 
@@ -105,6 +106,7 @@ Minimum staging contents:
 - `docs/governance/`
 - `docs/governance/digital-state-runbook-ar.md`
 - `skills/devops/governance-status/`
+- `scripts/bootstrap/`
 - `scripts/governance/`
 - `specs/003-portable-digital-state-distribution/`
 - `specs/004-setup-wizard-hardening/`
@@ -115,7 +117,7 @@ Run the distribution checks again from inside the staging directory:
 
 ```bash
 python3 scripts/governance/bootstrap_digital_state.py --json
-python3 scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening scripts/governance wizard.py preflight START.bat START.sh
+python3 scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening scripts/bootstrap scripts/governance wizard.py preflight START.bat START.sh
 ```
 
 Do not include:
@@ -210,7 +212,7 @@ git push origin main --tags
 Install from GitHub into a fresh profile:
 
 ```bash
-hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias digital-state
+hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias
 hermes profile show digital-state
 hermes -p digital-state config check
 ```
@@ -265,7 +267,7 @@ Before release, the GitHub repo should run these checks on pull requests and tag
 python3 -m unittest tests.scripts.test_staging_distribution tests.scripts.test_digital_state_distribution tests.scripts.test_preflight tests.scripts.test_model_ministry_routing -v
 python3 scripts/governance/bootstrap_digital_state.py --json
 python3 scripts/governance/build_staging_distribution.py --output /path/to/empty-staging-dir --json
-python3 scripts/governance/check_portability.py distribution.yaml SOUL.md config.yaml .env.EXAMPLE digital-state.manifest.json docs/governance skills/devops/governance-status scripts/governance specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening wizard.py preflight START.bat START.sh tests/scripts tests/fixtures
+python3 scripts/governance/check_portability.py distribution.yaml SOUL.md config.yaml .env.EXAMPLE digital-state.manifest.json docs/governance skills/devops/governance-status scripts/bootstrap scripts/governance specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening wizard.py preflight START.bat START.sh tests/scripts tests/fixtures
 ```
 
 CI must fail if:
@@ -279,13 +281,26 @@ CI must fail if:
 
 ## Non-technical user path
 
-The final user experience should be:
+The final Windows user experience should be:
+
+1. Open PowerShell on a fresh Windows machine.
+2. Run:
+
+```powershell
+irm https://raw.githubusercontent.com/samirhosninet/Hermes-Digital-Estate/main/scripts/bootstrap/install-windows.ps1 | iex
+```
+
+3. Use the local **Install Digital State Stack** UI.
+
+The Windows bootstrapper downloads this distribution, launches `START.bat`, installs Hermes Agent first, and then uses `%LOCALAPPDATA%\hermes\bin\hermes.cmd` directly because the current shell may not have refreshed PATH after the official Hermes installer.
+
+The advanced terminal experience should be:
 
 1. Install official Hermes Agent.
 2. Run one install command:
 
 ```bash
-hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias digital-state
+hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias
 ```
 
 3. Start the profile:

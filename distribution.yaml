@@ -31,4 +31,5 @@ distribution_owned:
   - skills/devops/governance-status/
   - specs/003-portable-digital-state-distribution/
   - specs/004-setup-wizard-hardening/
+  - scripts/bootstrap/
   - scripts/governance/

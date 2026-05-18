@@ -30,9 +30,18 @@ A release must include:
 - `docs/governance/digital-state-runbook-ar.md`
 - `preflight/`
 - `skills/`
+- `scripts/bootstrap/`
 - `scripts/governance/`
 - `specs/003-portable-digital-state-distribution/`
 - `specs/004-setup-wizard-hardening/`
+
+The public Windows bootstrap command depends on `scripts/bootstrap/install-windows.ps1` being present on the `main` branch:
+
+```powershell
+irm https://raw.githubusercontent.com/samirhosninet/Hermes-Digital-Estate/main/scripts/bootstrap/install-windows.ps1 | iex
+```
+
+That script must download the distribution package, launch `START.bat`, and let the local installer install Hermes Agent before checking Git, Node.js, or Workspace dependencies.
 
 ## Release process
 
@@ -77,6 +86,6 @@ Every pull request should run:
 python3 -m unittest tests.scripts.test_staging_distribution tests.scripts.test_digital_state_distribution tests.scripts.test_preflight -v
 python3 scripts/governance/bootstrap_digital_state.py --json
 python3 scripts/governance/build_staging_distribution.py --output /path/to/empty-staging-dir --json
-python3 scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening scripts/governance wizard.py preflight START.bat START.sh
+python3 scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening scripts/bootstrap scripts/governance wizard.py preflight START.bat START.sh
 hermes config check
 ```

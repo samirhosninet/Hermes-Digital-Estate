@@ -5,7 +5,7 @@
   "description": "Portable Digital State governance profile for official Hermes Agent.",
   "distribution": {
     "type": "hermes_profile_distribution",
-    "install_command": "hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias digital-state",
+    "install_command": "hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias",
     "update_command": "hermes profile update digital-state",
     "run_command": "hermes -p digital-state chat"
   },
@@ -24,6 +24,7 @@
     "skills/devops/governance-status/",
     "specs/003-portable-digital-state-distribution/",
     "specs/004-setup-wizard-hardening/",
+    "scripts/bootstrap/",
     "scripts/governance/"
   ],
   "forbidden_paths": [
@@ -54,6 +55,9 @@
     "docs/governance/digital-state-runbook-ar.md",
     "docs/governance/portable-digital-state.md",
     "skills/devops/governance-status/SKILL.md",
+    "scripts/bootstrap/install-windows.ps1",
+    "scripts/bootstrap/windows_bootstrap.ps1",
+    "scripts/bootstrap/bootstrap-ui.html",
     "scripts/governance/bootstrap_digital_state.py",
     "scripts/governance/build_staging_distribution.py",
     "scripts/governance/check_portability.py",
@@ -74,7 +78,7 @@
     "python3 scripts/governance/bootstrap_digital_state.py --json",
     "python3 scripts/governance/build_staging_distribution.py --output <outside-repo-empty-dir> --json",
     "python3 -m unittest tests.scripts.test_preflight",
-    "python3 scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening scripts/governance wizard.py preflight START.bat START.sh",
+    "python3 scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening scripts/bootstrap scripts/governance wizard.py preflight START.bat START.sh",
     "hermes config check"
   ],
   "supported_modes": [

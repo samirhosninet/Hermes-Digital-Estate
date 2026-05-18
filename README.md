@@ -13,12 +13,23 @@ Digital State is a **profile distribution** that installs **on top of** official
 - **Model ministry routing** — fixed provider/model assignments per ministry
 - **Scripts** — bootstrap, portability checks, benchmarking
 
-## Setup Wizard (Recommended — One Click)
+## Windows Stack Installer (Recommended)
 
-**Windows:** Double-click `START.bat`
-**macOS / Linux:** Double-click `START.sh` (or run `bash START.sh`)
+**Fresh Windows machine:** open PowerShell and run:
 
-That's it. The wizard opens automatically in your browser, starting at `http://127.0.0.1:8484` or the next available local port, with a 7-step guided readiness check. No technical knowledge required.
+```powershell
+irm https://raw.githubusercontent.com/samirhosninet/Hermes-Digital-Estate/main/scripts/bootstrap/install-windows.ps1 | iex
+```
+
+This downloads the Digital State bootstrap package, opens the local **Install Digital State Stack** UI, and starts with official Hermes Agent installation. Hermes Agent's Windows installer is responsible for provisioning Python, Node.js 22, and PortableGit.
+
+**Manual fallback:** download the repository ZIP, extract it, then double-click `START.bat`.
+
+The local Web UI checks and installs Hermes Agent, Hermes Workspace, and the Digital State profile in order, with visible logs and manual fallback commands when something fails.
+
+**macOS / Linux:** run the setup wizard directly with `bash START.sh`.
+
+The wizard opens automatically in your browser, starting at `http://127.0.0.1:8484` or the next available local port, with a guided readiness check.
 
 Alternatively, run directly:
 ```bash
@@ -32,13 +43,13 @@ Arabic operator guide: [docs/governance/digital-state-runbook-ar.md](docs/govern
 
 ```bash
 # 1. Install official Hermes Agent first, then install this profile distribution
-hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias digital-state
+hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias
 
 # 2. Verify
 hermes profile show digital-state
 hermes -p digital-state config check
 python3 scripts/governance/bootstrap_digital_state.py --json
-python3 scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening scripts/governance wizard.py preflight START.bat START.sh
+python3 scripts/governance/check_portability.py docs/governance skills/devops/governance-status specs/003-portable-digital-state-distribution specs/004-setup-wizard-hardening scripts/bootstrap scripts/governance wizard.py preflight START.bat START.sh
 ```
 
 ## Structure
@@ -50,6 +61,7 @@ hermes-digital-state/
 ├── distribution.yaml                # Distribution metadata
 ├── digital-state.manifest.json      # Manifest for portability checks
 ├── docs/governance/                 # Governance documents and operator runbooks
+├── scripts/bootstrap/               # Windows stack installer UI
 ├── scripts/governance/              # Bootstrap, portability, benchmark scripts
 ├── skills/devops/governance-status/ # Governance status skill
 ├── skills/software-development/spec-kit/ # Spec Kit skill

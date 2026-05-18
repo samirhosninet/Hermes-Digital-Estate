@@ -16,7 +16,25 @@ Digital State is not a fork of Hermes Agent and does not replace the official He
 
 ## The simple path
 
-### 1. Install official Hermes Agent
+### Windows: use the stack installer
+
+On a fresh Windows machine, open PowerShell and run:
+
+```powershell
+irm https://raw.githubusercontent.com/samirhosninet/Hermes-Digital-Estate/main/scripts/bootstrap/install-windows.ps1 | iex
+```
+
+This downloads the Digital State bootstrap package and opens a local Web UI. The UI installs official Hermes Agent first; Hermes Agent's Windows installer provisions Python, Node.js 22, and PortableGit.
+
+Manual fallback: download the repository ZIP, extract it, then double-click:
+
+```bat
+START.bat
+```
+
+The local UI checks and installs Hermes Agent, Hermes Workspace, and the Digital State profile in order. If something is missing, the UI explains what failed, why it matters, and the command or link to fix it.
+
+### Terminal path: install official Hermes Agent
 
 Use the official Hermes installation instructions from NousResearch.
 
@@ -33,17 +51,17 @@ hermes setup
 hermes config check
 ```
 
-### 2. Install Digital State
+### Install Digital State
 
 Install the Digital State profile distribution:
 
 ```bash
-hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias digital-state
+hermes profile install github.com/samirhosninet/Hermes-Digital-Estate --alias
 ```
 
 This is the canonical GitHub source for the Digital State profile distribution.
 
-### 3. Start Digital State
+### Start Digital State
 
 Run:
 
@@ -57,7 +75,7 @@ If an alias wrapper is created by Hermes, you may also be able to run:
 digital-state chat
 ```
 
-### 4. Say this
+### Say this
 
 Inside the chat, type:
 
