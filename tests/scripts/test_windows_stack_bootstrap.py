@@ -61,10 +61,12 @@ class WindowsStackBootstrapTests(unittest.TestCase):
         self.assertIn("Hermes-Digital-Estate/archive/refs/heads/$Ref.zip", text)
         self.assertIn("$env:LOCALAPPDATA", text)
         self.assertIn("HermesDigitalState\\bootstrap", text)
+        self.assertIn("runs\\$RunId", text)
         self.assertIn("Invoke-WebRequest", text)
         self.assertIn("Expand-Archive", text)
         self.assertIn('Filter "START.bat"', text)
         self.assertIn("Start-Process", text)
+        self.assertNotIn("Remove-Item -LiteralPath $ExtractRoot", text)
         self.assertNotIn("git clone", text)
 
     def test_bootstrap_treats_hermes_as_source_of_windows_tools(self):

@@ -5,12 +5,15 @@ param(
 $ErrorActionPreference = "Stop"
 $SourceZipUrl = "https://github.com/samirhosninet/Hermes-Digital-Estate/archive/refs/heads/$Ref.zip"
 $BootstrapRoot = Join-Path $env:LOCALAPPDATA "HermesDigitalState\bootstrap"
-$DownloadPath = Join-Path $BootstrapRoot "Hermes-Digital-Estate-$Ref.zip"
-$ExtractRoot = Join-Path $BootstrapRoot "extract"
+$RunId = "$(Get-Date -Format yyyyMMddHHmmss)-$([guid]::NewGuid().ToString('N'))"
+$RunRoot = Join-Path $BootstrapRoot "runs\$RunId"
+$DownloadPath = Join-Path $RunRoot "Hermes-Digital-Estate-$Ref.zip"
+$ExtractRoot = Join-Path $RunRoot "extract"
 $LogDir = Join-Path $env:TEMP "hermes-digital-state-bootstrap"
 $LogPath = Join-Path $LogDir "install-windows.log"
 
 New-Item -ItemType Directory -Force -Path $BootstrapRoot | Out-Null
+New-Item -ItemType Directory -Force -Path $RunRoot | Out-Null
 New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
 
 function Write-Step([string]$Message) {
@@ -30,11 +33,7 @@ function Fail-WithLog([string]$Message) {
 
 try {
     Set-Content -LiteralPath $LogPath -Value "Digital State Windows bootstrap log" -Encoding UTF8
-    Write-Step "Preparing bootstrap directory: $BootstrapRoot"
-
-    if (Test-Path -LiteralPath $ExtractRoot) {
-        Remove-Item -LiteralPath $ExtractRoot -Recurse -Force
-    }
+    Write-Step "Preparing bootstrap run directory: $RunRoot"
     New-Item -ItemType Directory -Force -Path $ExtractRoot | Out-Null
 
     Write-Step "Downloading Digital State bootstrap package from GitHub."
