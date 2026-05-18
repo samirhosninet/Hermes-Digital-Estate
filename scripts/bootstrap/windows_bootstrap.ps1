@@ -99,10 +99,10 @@ function Write-Response($Context, [int]$Status, [string]$Body, [string]$ContentT
     $Context.Response.Close()
 }
 
-function Get-CommandVersion([string]$FileName, [string[]]$Args) {
+function Get-CommandVersion([string]$FileName, [string[]]$CommandArgs) {
     if (-not $FileName) { return "" }
     try {
-        $output = & $FileName @Args 2>&1 | Select-Object -First 1
+        $output = & $FileName @CommandArgs 2>&1 | Select-Object -First 1
         if ($LASTEXITCODE -eq 0 -or $output) { return [string]$output }
     } catch {}
     return ""
