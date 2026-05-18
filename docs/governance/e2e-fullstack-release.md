@@ -287,7 +287,7 @@ The final Windows user experience should be:
 2. Run:
 
 ```powershell
-irm https://raw.githubusercontent.com/samirhosninet/Hermes-Digital-Estate/main/scripts/bootstrap/install-windows.ps1 | iex
+irm https://raw.githubusercontent.com/samirhosninet/Hermes-Digital-Estate/refs/heads/main/scripts/bootstrap/install-windows.ps1 | iex
 ```
 
 3. Use the local **Install Digital State Stack** UI.

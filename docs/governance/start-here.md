@@ -21,7 +21,7 @@ Digital State is not a fork of Hermes Agent and does not replace the official He
 On a fresh Windows machine, open PowerShell and run:
 
 ```powershell
-irm https://raw.githubusercontent.com/samirhosninet/Hermes-Digital-Estate/main/scripts/bootstrap/install-windows.ps1 | iex
+irm https://raw.githubusercontent.com/samirhosninet/Hermes-Digital-Estate/refs/heads/main/scripts/bootstrap/install-windows.ps1 | iex
 ```
 
 This downloads the Digital State bootstrap package and opens a local Web UI. The UI installs official Hermes Agent first; Hermes Agent's Windows installer provisions Python, Node.js 22, and PortableGit.

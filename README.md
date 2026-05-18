@@ -18,7 +18,7 @@ Digital State is a **profile distribution** that installs **on top of** official
 **Fresh Windows machine:** open PowerShell and run:
 
 ```powershell
-irm https://raw.githubusercontent.com/samirhosninet/Hermes-Digital-Estate/main/scripts/bootstrap/install-windows.ps1 | iex
+irm https://raw.githubusercontent.com/samirhosninet/Hermes-Digital-Estate/refs/heads/main/scripts/bootstrap/install-windows.ps1 | iex
 ```
 
 This downloads the Digital State bootstrap package, opens the local **Install Digital State Stack** UI, and starts with official Hermes Agent installation. Hermes Agent's Windows installer is responsible for provisioning Python, Node.js 22, and PortableGit.

@@ -38,7 +38,7 @@ A release must include:
 The public Windows bootstrap command depends on `scripts/bootstrap/install-windows.ps1` being present on the `main` branch:
 
 ```powershell
-irm https://raw.githubusercontent.com/samirhosninet/Hermes-Digital-Estate/main/scripts/bootstrap/install-windows.ps1 | iex
+irm https://raw.githubusercontent.com/samirhosninet/Hermes-Digital-Estate/refs/heads/main/scripts/bootstrap/install-windows.ps1 | iex
 ```
 
 That script must download the distribution package, launch `START.bat`, and let the local installer install Hermes Agent before checking Git, Node.js, or Workspace dependencies.

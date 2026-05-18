@@ -32,7 +32,7 @@ hermes -p digital-state chat
 على جهاز Windows جديد، ابدأ من PowerShell بهذا الأمر:
 
 ```powershell
-irm https://raw.githubusercontent.com/samirhosninet/Hermes-Digital-Estate/main/scripts/bootstrap/install-windows.ps1 | iex
+irm https://raw.githubusercontent.com/samirhosninet/Hermes-Digital-Estate/refs/heads/main/scripts/bootstrap/install-windows.ps1 | iex
 ```
 
 هذا الأمر يحمل حزمة bootstrap الخاصة بالدولة الرقمية إلى مجلد محلي، ثم يفتح واجهة **Install Digital State Stack**. البداية تكون بتثبيت Hermes Agent الرسمي أولا. مثبت Hermes الرسمي هو المسؤول عن توفير Python وNode.js 22 وPortableGit؛ لا تطلب من المستخدم تثبيت هذه الأدوات يدويا قبل Hermes.
